@@ -9,7 +9,7 @@ export const site = {
 	// PLACEHOLDER: add a 1200×630 PNG at static/og-image.png, then set this to '/og-image.png'.
 	ogImage: null as string | null,
 	// PLACEHOLDER: support contact shown on the legal pages.
-	contactEmail: '[CONTACT EMAIL]'
+	contactEmail: 'contact@dollarmanlearning.com'
 };
 
 export const absoluteUrl = (pathname: string) => new URL(pathname, `${site.url}/`).href;

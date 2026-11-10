@@ -12,7 +12,7 @@
 >
 	<p>
 		This policy explains what information {site.name} ("we") processes when you use dollarmanlearning.com.
-		The website is operated by [LEGAL BUSINESS NAME, ADDRESS]. Contact: {site.contactEmail}.
+		The website is operated by DOLLAR MAN LEARNING. Contact: {site.contactEmail}.
 	</p>
 	<h2>What we do not collect</h2>
 	<p>
