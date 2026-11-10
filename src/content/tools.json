@@ -1,0 +1,39 @@
+[
+	{
+		"slug": "position-size-calculator",
+		"kind": "calculator",
+		"title": "Position size calculator",
+		"description": "Find the right lot size for your account, risk percentage and stop-loss distance.",
+		"href": "/tools/position-size-calculator"
+	},
+	{
+		"slug": "risk-reward-calculator",
+		"kind": "calculator",
+		"title": "Risk/reward calculator",
+		"description": "Compare your stop-loss and target, and see the win rate you need to break even.",
+		"href": "/tools/risk-reward-calculator"
+	},
+	{
+		"slug": "pip-value-calculator",
+		"kind": "calculator",
+		"title": "Pip value calculator",
+		"description": "See how much one pip is worth in US dollars for any lot size.",
+		"href": "/tools/pip-value-calculator"
+	},
+	{
+		"slug": "trading-journal",
+		"kind": "download",
+		"title": "Trading journal template",
+		"description": "A ready-to-use journal for Excel or Google Sheets. Log every trade and review your progress.",
+		"href": "/downloads/trading-journal.csv",
+		"fileFormat": "CSV (Excel / Google Sheets)"
+	},
+	{
+		"slug": "cheat-sheet",
+		"kind": "download",
+		"title": "Beginner cheat-sheet pack",
+		"description": "Key terms, order types, candle anatomy and a pre-trade checklist on one printable page.",
+		"href": "/downloads/cheat-sheet",
+		"fileFormat": "Printable page (save as PDF)"
+	}
+]

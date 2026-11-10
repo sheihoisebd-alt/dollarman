@@ -1,0 +1,108 @@
+{
+	"trading-basics": [
+		{
+			"question": "What makes the price of something in a market go up?",
+			"options": [
+				"More people want to buy it than want to sell it at the current price",
+				"The broker decides to raise it",
+				"Prices only go up at the start of the month",
+				"A trading signal group posts about it"
+			],
+			"answer": 0,
+			"explanation": "Prices move because of supply and demand. When buyers are more eager than sellers, price rises until they balance again."
+		},
+		{
+			"question": "Which statement about trading is most realistic for a beginner?",
+			"options": [
+				"You can double your money every month if you follow signals",
+				"Losing trades are normal, and protecting your capital comes first",
+				"With enough indicators you will never lose",
+				"Trading is easy once you open a live account"
+			],
+			"answer": 1,
+			"explanation": "Every trader has losing trades. Beginners who focus on learning and managing risk last much longer than those chasing quick profits."
+		},
+		{
+			"question": "What is the main difference between trading and gambling?",
+			"options": [
+				"There is no difference",
+				"Trading always makes money",
+				"Trading uses a plan, defined risk and review, while gambling relies on luck without an edge or plan",
+				"Gambling is done online and trading is not"
+			],
+			"answer": 2,
+			"explanation": "Trading without a plan or risk limits can look a lot like gambling. A written plan, a stop-loss and honest review are what make it a skill to study."
+		},
+		{
+			"question": "What does it mean to 'go long' (buy)?",
+			"options": [
+				"You expect the price to go up",
+				"You expect the price to go down",
+				"You hold the trade for at least a year",
+				"You use the largest possible position"
+			],
+			"answer": 0,
+			"explanation": "Going long means buying because you expect price to rise. Going short means selling because you expect price to fall."
+		},
+		{
+			"question": "Where should a complete beginner practise first?",
+			"options": [
+				"A live account with borrowed money",
+				"A demo (practice) account with virtual money",
+				"A friend's account",
+				"Nowhere; just start trading live"
+			],
+			"answer": 1,
+			"explanation": "A demo account lets you learn the platform and practise your plan without risking real money."
+		}
+	],
+	"reading-price-charts": [
+		{
+			"question": "On a candlestick, what does the body show?",
+			"options": [
+				"The range between the open and close price",
+				"The broker's spread",
+				"The number of traders",
+				"The highest price of the week"
+			],
+			"answer": 0,
+			"explanation": "The body spans the open and close. The thin lines (wicks) show the high and low."
+		},
+		{
+			"question": "Why is a single candle not enough to make a decision?",
+			"options": [
+				"Candles are random",
+				"Context such as trend, support and resistance gives the candle meaning",
+				"Only line charts are accurate",
+				"Candles only work on the daily chart"
+			],
+			"answer": 1,
+			"explanation": "The same candle shape can mean different things in different places on the chart. Always read it in context."
+		}
+	],
+	"risk-management": [
+		{
+			"question": "Your account is $500 and you risk 1% per trade. What is your maximum risk on one trade?",
+			"options": ["$50", "$5", "$1", "$0.50"],
+			"answer": 1,
+			"explanation": "1% of $500 is $5. The position-size calculator turns that into a lot size for your stop-loss distance."
+		},
+		{
+			"question": "A trade risks 20 pips to target 40 pips. What is the risk/reward ratio?",
+			"options": ["1:1", "1:2", "2:1", "1:4"],
+			"answer": 1,
+			"explanation": "You risk 1 unit to make 2 units, so the ratio is 1:2. At 1:2 you break even if you win about 33% of trades (before costs)."
+		},
+		{
+			"question": "Where should a stop-loss go?",
+			"options": [
+				"Wherever feels comfortable",
+				"At a level on the chart where your trade idea is proven wrong",
+				"Never use a stop-loss",
+				"Exactly 1 pip from your entry"
+			],
+			"answer": 1,
+			"explanation": "Place the stop where the idea is invalid. Then size the position so that hitting the stop costs only your planned risk."
+		}
+	]
+}

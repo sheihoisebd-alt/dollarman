@@ -1,0 +1,245 @@
+[
+	{
+		"slug": "trading-basics",
+		"title": "Trading basics: what trading really is",
+		"summary": "Start from zero. Learn what a market is, why prices move, and how trading differs from investing and from gambling, with honest expectations from day one.",
+		"durationMin": 25,
+		"preview": true,
+		"outcomes": [
+			"Explain in your own words what a market and a trade are",
+			"Describe why prices go up and down",
+			"Tell the difference between trading, investing and gambling",
+			"Set realistic expectations for your first months of learning"
+		],
+		"lessons": [
+			"What is a market?",
+			"Buyers, sellers and why prices move",
+			"Trading vs investing vs gambling",
+			"What a beginner should (and should not) expect",
+			"Key words you will hear every day"
+		],
+		"checklist": [
+			"I can explain what a market is",
+			"I know why prices move",
+			"I understand that losses are a normal part of trading",
+			"I have joined the Telegram community for Module 2"
+		]
+	},
+	{
+		"slug": "markets-and-instruments",
+		"title": "Markets and instruments",
+		"summary": "Forex, stocks, crypto and commodities: what each market is, how currency pairs work, and when each market is open.",
+		"durationMin": 30,
+		"outcomes": [
+			"Name the main markets and what is traded in each",
+			"Read a currency pair such as EUR/USD (base and quote)",
+			"Know the main trading sessions and why they matter",
+			"Understand what affects liquidity and volatility"
+		],
+		"lessons": [
+			"Forex, stocks, crypto and commodities at a glance",
+			"Currency pairs: base, quote, majors and crosses",
+			"Trading sessions: Asia, London and New York",
+			"Liquidity and volatility in plain words"
+		],
+		"checklist": [
+			"I can name four types of market",
+			"I can tell the base and quote currency in a pair",
+			"I know which session overlaps are the busiest"
+		]
+	},
+	{
+		"slug": "reading-price-charts",
+		"title": "Reading a price chart",
+		"summary": "Learn to read candlestick charts, choose a timeframe, and understand what open, high, low and close tell you.",
+		"durationMin": 35,
+		"outcomes": [
+			"Read a candlestick (open, high, low, close)",
+			"Switch between timeframes and know when to use each",
+			"Recognise bullish, bearish and indecision candles",
+			"Set up a clean chart on a free charting platform"
+		],
+		"lessons": [
+			"Line, bar and candlestick charts",
+			"Anatomy of a candle: OHLC",
+			"Timeframes: from 5 minutes to daily",
+			"Common candle shapes, and why context matters more",
+			"Setting up your first chart"
+		],
+		"checklist": [
+			"I can point to the open, high, low and close of a candle",
+			"I have set up a chart with one higher and one lower timeframe",
+			"I know that one candle alone is not a signal"
+		]
+	},
+	{
+		"slug": "brokers-accounts-orders",
+		"title": "Brokers, accounts and order types",
+		"summary": "How brokers work, what spread, leverage and margin mean, the different order types, and how to protect yourself from scams.",
+		"durationMin": 40,
+		"outcomes": [
+			"Explain spread, commission, leverage and margin",
+			"Use market, limit and stop orders correctly",
+			"Check whether a broker is regulated and avoid common scams",
+			"Know the rules for online trading in your own country"
+		],
+		"lessons": [
+			"What a broker does and how it earns money",
+			"Spread, commission and swap",
+			"Leverage and margin: why they magnify losses as well as gains",
+			"Order types: market, limit, stop and stop-loss",
+			"Regulation, legal checks and red flags of scams",
+			"Opening a demo account"
+		],
+		"checklist": [
+			"I can explain leverage and why it is risky",
+			"I know how to place a stop-loss order",
+			"I have checked the trading rules for my country",
+			"I have opened a demo (practice) account, not a live one"
+		]
+	},
+	{
+		"slug": "support-resistance-trends",
+		"title": "Support, resistance and trends",
+		"summary": "The foundation of chart analysis: find support and resistance zones, identify trends, and understand market structure.",
+		"durationMin": 40,
+		"outcomes": [
+			"Draw support and resistance as zones, not exact lines",
+			"Identify uptrends, downtrends and ranges",
+			"Understand higher highs, higher lows and breaks of structure",
+			"Avoid drawing too many lines"
+		],
+		"lessons": [
+			"What support and resistance are",
+			"Drawing zones on higher timeframes",
+			"Trends and market structure",
+			"Ranges and breakouts",
+			"Practice: mark up three charts"
+		],
+		"checklist": [
+			"I have marked support and resistance on three charts",
+			"I can tell whether a chart is trending or ranging",
+			"I posted one of my charts in the community for feedback"
+		]
+	},
+	{
+		"slug": "indicators-basics",
+		"title": "Indicators, used simply",
+		"summary": "What indicators can and cannot do. Learn moving averages and RSI, and why fewer indicators usually means clearer decisions.",
+		"durationMin": 35,
+		"outcomes": [
+			"Explain what an indicator is calculated from",
+			"Use moving averages to read trend direction",
+			"Read RSI without treating it as a buy/sell button",
+			"Keep a clean chart with one or two tools"
+		],
+		"lessons": [
+			"What indicators are (and their limits)",
+			"Moving averages: simple and exponential",
+			"RSI and momentum",
+			"Why more indicators is not better"
+		],
+		"checklist": [
+			"I have added one moving average to my chart",
+			"I can explain what RSI measures",
+			"My chart has no more than two indicators"
+		]
+	},
+	{
+		"slug": "risk-management",
+		"title": "Risk management: the most important module",
+		"summary": "Protect your account first. Learn the 1% rule, stop-losses, position sizing and risk/reward, with free calculators.",
+		"durationMin": 45,
+		"outcomes": [
+			"Decide how much of your account to risk per trade",
+			"Place a stop-loss based on the chart, not on hope",
+			"Calculate position size with the free calculator",
+			"Understand risk/reward and break-even win rate"
+		],
+		"lessons": [
+			"Why risk management comes before strategy",
+			"The 1% rule and drawdowns",
+			"Where to place a stop-loss",
+			"Position sizing step by step",
+			"Risk/reward and break-even win rate",
+			"Practice with the calculators"
+		],
+		"checklist": [
+			"I have chosen a maximum risk per trade (for example 1%)",
+			"I have used the position-size calculator on three example trades",
+			"I understand that I can be wrong often and still manage risk"
+		]
+	},
+	{
+		"slug": "trading-plan",
+		"title": "Building a simple trading plan",
+		"summary": "Turn what you have learned into written rules: what you trade, when you enter, when you exit, and how you review.",
+		"durationMin": 35,
+		"outcomes": [
+			"Write a one-page trading plan",
+			"Define clear entry, exit and no-trade rules",
+			"Create a pre-trade checklist",
+			"Plan a weekly review routine"
+		],
+		"lessons": [
+			"Why a written plan matters",
+			"Choosing markets, timeframes and trading hours",
+			"Entry and exit rules",
+			"Your pre-trade checklist",
+			"Weekly review"
+		],
+		"checklist": [
+			"I have written my one-page trading plan",
+			"I have a pre-trade checklist",
+			"I shared my plan in the community for feedback"
+		]
+	},
+	{
+		"slug": "trading-psychology",
+		"title": "Trading psychology",
+		"summary": "Fear, greed, revenge trading and overtrading. Learn to recognise emotional decisions and build habits that keep you disciplined.",
+		"durationMin": 30,
+		"outcomes": [
+			"Recognise fear, greed and revenge trading in yourself",
+			"Use rules and checklists to reduce emotional decisions",
+			"Handle a losing streak calmly",
+			"Know when to step away from the screen"
+		],
+		"lessons": [
+			"Why emotions are the hardest part",
+			"Fear of missing out and overtrading",
+			"Revenge trading after a loss",
+			"Handling losing streaks",
+			"Healthy routines"
+		],
+		"checklist": [
+			"I have written my personal 'stop trading for today' rule",
+			"I know my emotional warning signs",
+			"I have a daily routine that includes breaks"
+		]
+	},
+	{
+		"slug": "practice-and-journaling",
+		"title": "Practice, journaling and next steps",
+		"summary": "Put everything together on a demo account. Keep a trading journal, review your results honestly and plan your next stage of learning.",
+		"durationMin": 40,
+		"outcomes": [
+			"Run a structured demo practice period",
+			"Keep a trading journal with the free template",
+			"Review your trades and find one thing to improve",
+			"Plan your next stage of learning"
+		],
+		"lessons": [
+			"How to practise on a demo account",
+			"Keeping a trading journal",
+			"Reviewing your results honestly",
+			"Common beginner mistakes to avoid",
+			"Your next steps"
+		],
+		"checklist": [
+			"I have logged at least 20 demo trades in my journal",
+			"I have done one weekly review",
+			"I know the one habit I want to improve next"
+		]
+	}
+]
