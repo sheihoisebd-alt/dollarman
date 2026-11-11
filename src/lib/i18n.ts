@@ -100,7 +100,7 @@ const en = {
 		freePreview: 'Free preview',
 		instructorTitle: 'Your instructor',
 		instructor: {
-			name: 'Dollar Man',
+			name: 'Syed Mridul Hasan Shanto',
 			role: 'Founder and lead instructor · Financial freedom advocate',
 			photoAlt: 'Dollar Man, founder and lead instructor of Dollar Man Learning',
 			bio: [
