@@ -45,6 +45,14 @@
 			description: site.description,
 			inLanguage: 'en',
 			isAccessibleForFree: true,
+			instructor: {
+				'@type': 'Person',
+				name: t('en').home.instructor.name,
+				jobTitle: 'Founder and lead instructor',
+				description: t('en').home.instructor.bio[0],
+				image: absoluteUrl('/instructor.jpg'),
+				worksFor: { '@id': `${site.url}/#organization` }
+			},
 			provider: { '@type': 'Organization', '@id': `${site.url}/#organization`, name: site.name },
 			offers: { '@type': 'Offer', price: 0, priceCurrency: 'USD', category: 'Free' },
 			hasCourseInstance: { '@type': 'CourseInstance', courseMode: 'online', courseWorkload: 'PT6H' }
@@ -63,7 +71,7 @@
 
 <Seo
 	title={lang === 'bn'
-		? `${d.title} ${d.titleHighlight} | ${site.name}`
+		? `${d.title} ${d.titleHighlight}`
 		: `${d.title} ${d.titleHighlight} (limited-time offer)`}
 	description={d.subtitle}
 	{path}
@@ -104,9 +112,12 @@
 				</a>
 			</div>
 			<p class="mt-3 text-sm text-muted">{cta.note}</p>
-			<ul class="mt-8 grid gap-2 text-ink sm:grid-cols-3">
+			<!-- One row on tablets; a stacked checklist in the narrower desktop text column. -->
+			<ul
+				class="mt-8 flex flex-col gap-2 text-ink sm:flex-row sm:flex-wrap sm:gap-x-6 lg:flex-col lg:gap-y-2.5"
+			>
 				{#each d.heroPoints as point (point)}
-					<li class="flex items-center gap-2">
+					<li class="flex items-center gap-2 sm:whitespace-nowrap">
 						<Icon name="check" class="size-5 shrink-0 text-silver-300" />{point}
 					</li>
 				{/each}
@@ -201,23 +212,26 @@
 		<h2 id="instructor" class="text-3xl font-bold tracking-tight text-ink">
 			{d.instructorTitle}
 		</h2>
-		<!-- PLACEHOLDER: replace with the real instructor's name, photo, background and experience.
-		     Only state facts that can be verified. No income claims or screenshots of profits. -->
+		<!-- No income figures or profit screenshots: keep the risk note next to the story. -->
 		<div
-			class="mt-8 flex flex-col gap-6 rounded-2xl border-2 border-dashed border-gold-400 bg-surface p-6 sm:flex-row sm:items-center"
+			class="mt-8 grid gap-6 overflow-hidden rounded-2xl border border-line bg-surface sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] sm:items-center"
 		>
-			<div
-				class="flex size-24 shrink-0 items-center justify-center rounded-full bg-line text-sm font-semibold text-muted"
-			>
-				[PHOTO]
-			</div>
-			<div>
-				<p class="text-sm font-semibold tracking-wide text-gold-300 uppercase">Placeholder</p>
-				<p class="mt-1 text-xl font-bold text-ink">[INSTRUCTOR NAME]</p>
-				<p class="mt-2 text-body">
-					[Short, factual bio: how long you have been studying the markets, what you focus on
-					teaching, and why you started a free course for beginners.]
-				</p>
+			<img
+				src="/instructor.jpg"
+				alt={d.instructor.photoAlt}
+				width="800"
+				height="1000"
+				loading="lazy"
+				decoding="async"
+				class="aspect-4/5 w-full object-cover"
+			/>
+			<div class="px-6 pb-6 sm:py-6 sm:pr-8 sm:pl-0">
+				<p class="text-2xl font-bold text-ink">{d.instructor.name}</p>
+				<p class="mt-1 text-sm font-semibold text-silver-200">{d.instructor.role}</p>
+				{#each d.instructor.bio as paragraph (paragraph)}
+					<p class="mt-4 leading-relaxed text-body">{paragraph}</p>
+				{/each}
+				<p class="mt-4 text-sm text-muted">{d.instructor.note}</p>
 			</div>
 		</div>
 	</div>

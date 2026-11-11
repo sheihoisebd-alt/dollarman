@@ -99,6 +99,16 @@ const en = {
 		minutes: 'min',
 		freePreview: 'Free preview',
 		instructorTitle: 'Your instructor',
+		instructor: {
+			name: 'Dollar Man',
+			role: 'Founder and lead instructor · Financial freedom advocate',
+			photoAlt: 'Dollar Man, founder and lead instructor of Dollar Man Learning',
+			bio: [
+				'Dollar Man is a financial freedom advocate. He reached financial freedom himself by building one skill, step by step: trading. No shortcuts and no signal groups, just learning the basics, managing risk and practising with discipline.',
+				'Now he teaches the same path to complete beginners, in simple words and for free, because he believes everyone deserves the chance to learn a skill that can change their life.'
+			],
+			note: 'His results are his own. Trading is risky and many beginners lose money. This course teaches skills, not guaranteed income.'
+		},
 		includedTitle: "What's included",
 		includedItems: [
 			{
@@ -206,6 +216,16 @@ const bn: Dictionary = {
 		minutes: 'মিনিট',
 		freePreview: 'ফ্রি প্রিভিউ',
 		instructorTitle: 'আপনার ইন্সট্রাক্টর',
+		instructor: {
+			name: 'ডলার ম্যান',
+			role: 'প্রতিষ্ঠাতা ও প্রধান ইন্সট্রাক্টর · আর্থিক স্বাধীনতার প্রবক্তা',
+			photoAlt: 'ডলার ম্যান, Dollar Man Learning-এর প্রতিষ্ঠাতা ও প্রধান ইন্সট্রাক্টর',
+			bio: [
+				'ডলার ম্যান আর্থিক স্বাধীনতার একজন প্রবক্তা। তিনি নিজে ধাপে ধাপে একটি দক্ষতা গড়ে তুলে আর্থিক স্বাধীনতা অর্জন করেছেন: ট্রেডিং। কোনো শর্টকাট বা সিগন্যাল গ্রুপ নয়, শুধু বেসিক শেখা, রিস্ক ম্যানেজ করা আর শৃঙ্খলার সাথে অনুশীলন।',
+				'এখন তিনি একদম নতুনদের সেই একই পথ শেখান, সহজ ভাষায় এবং ফ্রিতে, কারণ তিনি বিশ্বাস করেন জীবন বদলে দিতে পারে এমন একটি দক্ষতা শেখার সুযোগ সবার পাওয়া উচিত।'
+			],
+			note: 'তাঁর ফলাফল তাঁর নিজের। ট্রেডিংয়ে ঝুঁকি আছে এবং অনেক নতুন ট্রেডার টাকা হারান। এই কোর্স দক্ষতা শেখায়, নিশ্চিত আয়ের প্রতিশ্রুতি দেয় না।'
+		},
 		includedTitle: 'কোর্সে যা থাকছে',
 		includedItems: [
 			{ title: 'সাজানো লেসন', text: 'লার্নিং আউটকাম, কুইজ ও চেকলিস্টসহ ১০টি মডিউল।' },

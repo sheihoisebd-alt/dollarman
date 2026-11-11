@@ -2,6 +2,9 @@
 	import { resolve } from '$app/paths';
 	import TelegramButton from '#lib/components/TelegramButton.svelte';
 	import TextPage from '#lib/components/TextPage.svelte';
+	import { t } from '#lib/i18n.js';
+
+	const instructor = t('en').home.instructor;
 </script>
 
 <TextPage
@@ -40,10 +43,25 @@
 		</li>
 	</ul>
 	<h2>Who is behind it</h2>
-	<!-- PLACEHOLDER: replace with verified facts about the instructor/team and the business. -->
+	<img
+		src="/instructor.jpg"
+		alt={instructor.photoAlt}
+		width="800"
+		height="1000"
+		loading="lazy"
+		decoding="async"
+		class="aspect-4/5 w-full max-w-xs rounded-2xl object-cover"
+	/>
+	<p>
+		<strong>{instructor.name}</strong><br />{instructor.role}
+	</p>
+	{#each instructor.bio as paragraph (paragraph)}
+		<p>{paragraph}</p>
+	{/each}
+	<p><em>{instructor.note}</em></p>
+	<!-- PLACEHOLDER: replace with the business name and country of registration. -->
 	<p class="rounded-xl border-2 border-dashed border-gold-400 p-4">
-		[PLACEHOLDER: Instructor name, short factual background, business name and country of
-		registration.]
+		[PLACEHOLDER: Business name and country of registration.]
 	</p>
 	<h2>Affiliate disclosure</h2>
 	<p>
