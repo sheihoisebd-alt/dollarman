@@ -2,7 +2,9 @@
 	import { resolve } from '$app/paths';
 	import type { Dictionary } from '#lib/i18n.js';
 	import { consent } from '#lib/consent.svelte.js';
+	import { TELEGRAM_URL } from '#lib/attribution.svelte.js';
 	import { site } from '#lib/site.js';
+	import Icon from './Icon.svelte';
 
 	let { dict }: { dict: Dictionary } = $props();
 
@@ -47,6 +49,31 @@
 					{site.name}
 				</p>
 				<p class="mt-2 text-sm text-muted">{site.tagline}</p>
+				<!-- External profile links, so resolve() does not apply. -->
+				<!-- eslint-disable svelte/no-navigation-without-resolve -->
+				<div class="mt-4 flex gap-2">
+					{#if site.facebookUrl}
+						<a
+							href={site.facebookUrl}
+							target="_blank"
+							rel="noopener me"
+							aria-label="{site.name} on Facebook"
+							class="inline-flex size-10 items-center justify-center rounded-full border border-line text-body hover:text-ink"
+						>
+							<Icon name="facebook" />
+						</a>
+					{/if}
+					<a
+						href={TELEGRAM_URL}
+						target="_blank"
+						rel="noopener me"
+						aria-label="{site.name} on Telegram"
+						class="inline-flex size-10 items-center justify-center rounded-full border border-line text-body hover:text-ink"
+					>
+						<Icon name="telegram" />
+					</a>
+				</div>
+				<!-- eslint-enable svelte/no-navigation-without-resolve -->
 			</div>
 			{#each groups as group (group.title)}
 				<div>

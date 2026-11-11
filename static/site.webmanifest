@@ -1,0 +1,14 @@
+{
+	"name": "Dollar Man Learning",
+	"short_name": "Dollar Man",
+	"description": "Free beginner trading course: step-by-step lessons, live classes on Telegram and free tools.",
+	"start_url": "/",
+	"display": "standalone",
+	"background_color": "#09090b",
+	"theme_color": "#09090b",
+	"icons": [
+		{ "src": "/favicon.png", "sizes": "64x64", "type": "image/png" },
+		{ "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+		{ "src": "/logo.jpg", "sizes": "320x320", "type": "image/jpeg", "purpose": "any" }
+	]
+}

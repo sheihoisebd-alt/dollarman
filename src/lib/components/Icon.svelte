@@ -1,6 +1,7 @@
 <script lang="ts">
 	type Name =
 		| 'telegram'
+		| 'facebook'
 		| 'check'
 		| 'book'
 		| 'chart'
@@ -33,6 +34,12 @@
 			fill="currentColor"
 			stroke="none"
 			d="M21.4 3.6 2.9 10.7c-1.3.5-1.2 2.3.1 2.7l4.6 1.4 1.8 5.6c.3 1 1.6 1.3 2.3.5l2.6-2.6 4.6 3.4c.9.6 2.1.1 2.3-.9l3-15c.2-1.3-1-2.3-2.2-1.9Zm-3.3 4-8 7.2-.4 3.3-1.4-4.3 9.2-6.6c.4-.3.9.1.6.4Z"
+		/>
+	{:else if name === 'facebook'}
+		<path
+			fill="currentColor"
+			stroke="none"
+			d="M24 12a12 12 0 1 0-13.9 11.9v-8.4H7.1V12h3V9.4c0-3 1.8-4.7 4.5-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9V12h3.4l-.5 3.5h-2.9v8.4A12 12 0 0 0 24 12Z"
 		/>
 	{:else if name === 'check'}
 		<path d="M20 6 9 17l-5-5" />

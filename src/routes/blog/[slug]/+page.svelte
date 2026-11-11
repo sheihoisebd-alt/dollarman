@@ -24,6 +24,8 @@
 	description={post.description}
 	path="/blog/{post.slug}"
 	type="article"
+	published={post.published}
+	modified={post.updated ?? undefined}
 	jsonLd={[
 		{
 			'@context': 'https://schema.org',

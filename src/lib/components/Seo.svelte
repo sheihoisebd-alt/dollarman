@@ -11,6 +11,9 @@
 		noindex?: boolean;
 		/** hreflang alternates, e.g. { en: '/', bn: '/bn' } */
 		alternates?: Record<string, string>;
+		/** ISO dates for articles. */
+		published?: string;
+		modified?: string;
 	};
 
 	let {
@@ -20,8 +23,12 @@
 		type = 'website',
 		jsonLd = [],
 		noindex = false,
-		alternates
+		alternates,
+		published,
+		modified
 	}: Props = $props();
+
+	const locale = $derived(path === '/bn' || path.startsWith('/bn/') ? 'bn_BD' : 'en_US');
 
 	const fullTitle = $derived(title === site.name ? title : `${title} | ${site.name}`);
 	const canonical = $derived(absoluteUrl(path));
@@ -39,7 +46,10 @@
 	<title>{fullTitle}</title>
 	<meta name="description" content={description} />
 	<link rel="canonical" href={canonical} />
-	{#if noindex}<meta name="robots" content="noindex" />{/if}
+	<meta
+		name="robots"
+		content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'}
+	/>
 	{#if alternates}
 		{#each Object.entries(alternates) as [hreflang, href] (hreflang)}
 			<link rel="alternate" {hreflang} href={absoluteUrl(href)} />
@@ -51,8 +61,25 @@
 	<meta property="og:title" content={fullTitle} />
 	<meta property="og:description" content={description} />
 	<meta property="og:url" content={canonical} />
+	<meta property="og:locale" content={locale} />
+	{#if alternates}
+		{#each Object.keys(alternates).filter((l) => !locale.startsWith(l)) as alt (alt)}
+			<meta property="og:locale:alternate" content={alt === 'bn' ? 'bn_BD' : 'en_US'} />
+		{/each}
+	{/if}
+	{#if type === 'article' && published}
+		<meta property="article:published_time" content={published} />
+		<meta property="article:modified_time" content={modified ?? published} />
+	{/if}
+	{#if site.facebookUrl}<meta property="article:publisher" content={site.facebookUrl} />{/if}
+	<meta name="twitter:title" content={fullTitle} />
+	<meta name="twitter:description" content={description} />
 	{#if site.ogImage}
 		<meta property="og:image" content={absoluteUrl(site.ogImage)} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content={site.name} />
+		<meta name="twitter:image" content={absoluteUrl(site.ogImage)} />
 		<meta name="twitter:card" content="summary_large_image" />
 	{:else}
 		<meta name="twitter:card" content="summary" />

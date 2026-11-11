@@ -3,7 +3,10 @@
 	import { page } from '$app/state';
 </script>
 
-<svelte:head><title>{page.status} | Dollar Man Learning</title></svelte:head>
+<svelte:head>
+	<title>{page.status} | Dollar Man Learning</title>
+	<meta name="robots" content="noindex" />
+</svelte:head>
 
 <div class="container-page max-w-2xl py-20 text-center">
 	<p class="text-sm font-semibold text-silver-200">Error {page.status}</p>

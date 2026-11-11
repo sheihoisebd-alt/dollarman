@@ -2,7 +2,7 @@
 	import { resolve } from '$app/paths';
 	import type { Faq, Lang, Module } from '#lib/types.js';
 	import { t } from '#lib/i18n.js';
-	import { absoluteUrl, site } from '#lib/site.js';
+	import { absoluteUrl, site, socialProfiles } from '#lib/site.js';
 	import Icon from './Icon.svelte';
 	import ModuleList from './ModuleList.svelte';
 	import Seo from './Seo.svelte';
@@ -21,9 +21,22 @@
 		{
 			'@context': 'https://schema.org',
 			'@type': 'Organization',
+			'@id': `${site.url}/#organization`,
 			name: site.name,
 			url: site.url,
-			logo: absoluteUrl('/logo.jpg')
+			logo: absoluteUrl('/logo.jpg'),
+			description: site.description,
+			email: site.contactEmail,
+			sameAs: socialProfiles()
+		},
+		{
+			'@context': 'https://schema.org',
+			'@type': 'WebSite',
+			'@id': `${site.url}/#website`,
+			name: site.name,
+			url: site.url,
+			inLanguage: ['en', 'bn'],
+			publisher: { '@id': `${site.url}/#organization` }
 		},
 		{
 			'@context': 'https://schema.org',
@@ -32,7 +45,7 @@
 			description: site.description,
 			inLanguage: 'en',
 			isAccessibleForFree: true,
-			provider: { '@type': 'Organization', name: site.name, sameAs: site.url },
+			provider: { '@type': 'Organization', '@id': `${site.url}/#organization`, name: site.name },
 			offers: { '@type': 'Offer', price: 0, priceCurrency: 'USD', category: 'Free' },
 			hasCourseInstance: { '@type': 'CourseInstance', courseMode: 'online', courseWorkload: 'PT6H' }
 		},

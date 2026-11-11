@@ -4,6 +4,9 @@ import type { RequestHandler } from './$types';
 export const prerender = true;
 
 export const GET: RequestHandler = () =>
-	new Response(`User-agent: *\nDisallow: /api/\n\nSitemap: ${absoluteUrl('/sitemap.xml')}\n`, {
-		headers: { 'content-type': 'text/plain' }
-	});
+	new Response(
+		`User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: ${absoluteUrl('/sitemap.xml')}\n`,
+		{
+			headers: { 'content-type': 'text/plain' }
+		}
+	);
