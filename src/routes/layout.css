@@ -47,6 +47,8 @@
 	}
 	html {
 		color-scheme: dark;
+		/* Nothing (glows, cards mid-animation) may widen the page on phones; clip keeps sticky working */
+		overflow-x: clip;
 		/* Height of the floating header, padding included (see SiteHeader) */
 		--header-h: 4.25rem;
 	}
@@ -332,6 +334,16 @@
 		box-shadow: 0 0 0 16px var(--ring, rgb(42 171 238 / 0));
 	}
 }
+/* Gentle bob for badges that float beside a picture */
+@keyframes float-soft {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-7px);
+	}
+}
 @keyframes icon-nudge {
 	0%,
 	70%,
@@ -347,6 +359,11 @@
 }
 
 @layer components {
+	.float-soft {
+		animation: float-soft 4.5s ease-in-out infinite;
+		animation-delay: var(--float-delay, 0s);
+	}
+
 	/* Gold headline text flows slowly */
 	.text-gold {
 		animation: gold-flow 8s linear infinite;

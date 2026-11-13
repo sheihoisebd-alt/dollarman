@@ -2,7 +2,7 @@
 	import type { Faq, Lang, Module } from '#lib/types.js';
 	import { t } from '#lib/i18n.js';
 	import { href } from '#lib/paths.svelte.js';
-	import { popChildren, reveal, revealChildren, smoothDetails } from '#lib/motion.js';
+	import { popChildren, reveal, revealChildren, smoothDetails, tilt } from '#lib/motion.js';
 	import { absoluteUrl, site, socialProfiles } from '#lib/site.js';
 	import Icon from './Icon.svelte';
 	import ModuleList from './ModuleList.svelte';
@@ -13,6 +13,7 @@
 	import Seo from './Seo.svelte';
 	import StatsBand from './StatsBand.svelte';
 	import TelegramButton from './TelegramButton.svelte';
+	import VideoSection from './VideoSection.svelte';
 
 	let { lang, modules, faqs }: { lang: Lang; modules: Module[]; faqs: Faq[] } = $props();
 
@@ -179,6 +180,9 @@
 	</div>
 </section>
 
+<!-- Inside the course: video with floating highlights -->
+<VideoSection {lang} />
+
 <!-- Curriculum preview -->
 <section class="container-page py-14 sm:py-20" aria-labelledby="curriculum">
 	<div class="flex flex-wrap items-end justify-between gap-4">
@@ -210,26 +214,76 @@
 			{d.instructorTitle}
 		</h2>
 		<!-- No income figures or profit screenshots: keep the risk note next to the story. -->
-		<div
-			{@attach reveal({ y: 50 })}
-			class="mt-8 grid gap-6 overflow-hidden rounded-2xl border border-line bg-surface sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] sm:items-center"
-		>
-			<img
-				src="/instructor.jpg"
-				alt={d.instructor.photoAlt}
-				width="800"
-				height="1000"
-				loading="lazy"
-				decoding="async"
-				class="aspect-4/5 w-full object-cover"
-			/>
-			<div class="px-6 pb-6 sm:py-6 sm:pr-8 sm:pl-0">
-				<p class="text-2xl font-bold text-ink">{d.instructor.name}</p>
-				<p class="mt-1 text-sm font-semibold text-gold-300">{d.instructor.role}</p>
+		<div class="mt-8 grid gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-center">
+			<!-- Profile card: portrait fading into a name bar with the markets he teaches -->
+			<figure
+				{@attach reveal({ y: 50, scale: 0.95 })}
+				{@attach tilt(4)}
+				class="mx-auto w-full max-w-md overflow-hidden rounded-3xl border border-line-strong bg-surface shadow-2xl shadow-black/60"
+			>
+				<div class="relative aspect-4/5 overflow-hidden">
+					<img
+						src="/instructor.jpg"
+						alt={d.instructor.photoAlt}
+						width="800"
+						height="1000"
+						loading="lazy"
+						decoding="async"
+						class="size-full object-cover object-[50%_25%] contrast-110 saturate-[0.85]"
+					/>
+					<!-- Night-city mood: darker sky, warm rim light, fade into the name bar -->
+					<div
+						class="absolute inset-0 bg-[radial-gradient(60%_50%_at_75%_35%,rgb(255_120_40/0.22),transparent_70%),linear-gradient(to_bottom,rgb(0_0_0/0.45),transparent_30%,transparent_60%,var(--color-surface))]"
+						aria-hidden="true"
+					></div>
+				</div>
+				<figcaption
+					class="grid grid-cols-[minmax(0,1fr)_auto] divide-x divide-line border-t border-line"
+				>
+					<div class="p-4 sm:p-5">
+						<p class="text-xl font-extrabold text-ink sm:text-2xl">{d.instructor.name}</p>
+						<p class="mt-1.5 inline-flex items-center gap-1.5 text-sm font-medium text-body">
+							<span
+								class="flex size-4 items-center justify-center rounded-full bg-gold-400 text-page"
+								aria-hidden="true"><Icon name="check" class="size-3" /></span
+							>
+							{d.instructorBadge}
+						</p>
+					</div>
+					<ul
+						{@attach popChildren('li', 0.1)}
+						class="grid grid-cols-2 content-center gap-2 p-4 text-[0.7rem] font-bold tracking-wide uppercase sm:p-5 sm:text-xs"
+						aria-label={d.instructor.role}
+					>
+						{#each d.markets as market, i (market)}
+							<li
+								class={[
+									'rounded-md px-2 py-1 text-center ring-1',
+									[
+										'bg-sky-500/15 text-sky-300 ring-sky-400/30',
+										'bg-gold-400/15 text-gold-300 ring-gold-400/30',
+										'bg-emerald-500/15 text-emerald-300 ring-emerald-400/30',
+										'bg-rose-500/15 text-rose-300 ring-rose-400/30'
+									][i % 4]
+								]}
+							>
+								{market}
+							</li>
+						{/each}
+					</ul>
+				</figcaption>
+			</figure>
+
+			<div {@attach reveal({ y: 40 })}>
+				<p class="text-sm font-semibold tracking-wide text-gold-300 uppercase">
+					{d.instructor.role}
+				</p>
 				{#each d.instructor.bio as paragraph (paragraph)}
-					<p class="mt-4 leading-relaxed text-body">{paragraph}</p>
+					<p class="mt-4 text-lg leading-relaxed text-body">{paragraph}</p>
 				{/each}
-				<p class="mt-4 text-sm text-muted">{d.instructor.note}</p>
+				<p class="mt-5 rounded-xl border border-line bg-surface p-4 text-sm text-muted">
+					{d.instructor.note}
+				</p>
 			</div>
 		</div>
 	</div>
@@ -255,7 +309,7 @@
 			</li>
 		{/each}
 	</ul>
-	<div {@attach reveal({ x: -30, y: 0 })} class="mt-8 flex gap-4 rounded-2xl bg-raised p-5 sm:p-6">
+	<div {@attach reveal({ y: 30 })} class="mt-8 flex gap-4 rounded-2xl bg-raised p-5 sm:p-6">
 		<Icon name="shield" class="size-7 shrink-0 text-gold-300" />
 		<div>
 			<h3 class="font-semibold text-ink">{d.honestyTitle}</h3>

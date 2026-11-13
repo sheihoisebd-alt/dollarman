@@ -15,13 +15,13 @@ export const site = {
 	showcase: {
 		// PLACEHOLDER: the YouTube video id of the intro video (the part after watch?v=). While it is
 		// null the big card shows the photo only, with no play button.
-		introVideoId: null as string | null,
+		introVideoId: 'wNbt2FVUB-8' as string | null,
 		featuredImage: '/instructor.jpg'
 	},
 	// PLACEHOLDER LINKS: "/" until the real channel URLs are in, e.g. 'https://www.youtube.com/@name'.
 	// Used by the "connect with us" cards; a "/" link shows the platform name instead of a handle.
 	socials: {
-		youtube: '/' as string,
+		youtube: 'https://www.youtube.com/@Dollar_Mann' as string,
 		tiktok: '/' as string,
 		instagram: '/' as string
 	},

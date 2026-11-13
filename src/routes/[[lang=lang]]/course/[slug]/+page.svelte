@@ -114,7 +114,7 @@
 	<div class="container-page max-w-3xl space-y-10 pb-16">
 		<section aria-labelledby="outcomes" class="rounded-2xl border border-line p-5 sm:p-6">
 			<h2 id="outcomes" class="text-xl font-bold text-ink">{c.outcomes}</h2>
-			<ul {@attach revealChildren({ x: -20, y: 0, scale: 1 })} class="mt-4 space-y-2.5">
+			<ul {@attach revealChildren({ y: 16, scale: 1 })} class="mt-4 space-y-2.5">
 				{#each m.outcomes as outcome (outcome)}
 					<li class="flex gap-3 text-ink">
 						<Icon name="check" class="mt-0.5 size-5 shrink-0 text-gold-300" />{outcome}

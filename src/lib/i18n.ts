@@ -188,6 +188,17 @@ const en = {
 		curriculumLink: 'See the full curriculum',
 		minutes: 'min',
 		freePreview: 'Free preview',
+		video: {
+			eyebrow: 'Take a look',
+			title: 'Inside Dollar Man Learning',
+			intro: 'See how the classes work before you join: real charts, simple words and live Q&A.',
+			points: ['Step-by-step lessons', 'Live classes on Telegram', 'Focus on risk management'],
+			play: 'Play the intro video',
+			soon: 'Intro video coming soon',
+			photoAlt: 'Dollar Man teaching a class'
+		},
+		instructorBadge: '7+ years of experience',
+		markets: ['Forex', 'Gold', 'Crypto', 'Stocks'],
 		instructorTitle: 'Your instructor',
 		instructor: {
 			name: 'Syed Mridul Hasan Shanto',
@@ -370,6 +381,17 @@ const bn: Dictionary = {
 		curriculumLink: 'পুরো সিলেবাস দেখুন',
 		minutes: 'মিনিট',
 		freePreview: 'ফ্রি প্রিভিউ',
+		video: {
+			eyebrow: 'একবার দেখে নিন',
+			title: 'Dollar Man Learning-এর ভেতরে',
+			intro: 'যোগ দেওয়ার আগেই দেখে নিন ক্লাস কেমন হয়: আসল চার্ট, সহজ কথা আর লাইভ প্রশ্নোত্তর।',
+			points: ['ধাপে ধাপে লেসন', 'টেলিগ্রামে লাইভ ক্লাস', 'রিস্ক ম্যানেজমেন্টে জোর'],
+			play: 'ইন্ট্রো ভিডিও চালান',
+			soon: 'ইন্ট্রো ভিডিও শীঘ্রই আসছে',
+			photoAlt: 'ক্লাস নিচ্ছেন ডলার ম্যান'
+		},
+		instructorBadge: '৭+ বছরের অভিজ্ঞতা',
+		markets: ['ফরেক্স', 'গোল্ড', 'ক্রিপ্টো', 'স্টক'],
 		instructorTitle: 'আপনার ইন্সট্রাক্টর',
 		instructor: {
 			name: 'ডলার ম্যান',
