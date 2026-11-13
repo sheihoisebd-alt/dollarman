@@ -4,6 +4,7 @@
 	import { href } from '#lib/paths.svelte.js';
 	import { progress } from '#lib/progress.svelte.js';
 	import Icon from './Icon.svelte';
+	import { revealChildren } from '#lib/motion.js';
 
 	type Props = {
 		lang: Lang;
@@ -16,7 +17,7 @@
 	const c = $derived(t(lang).common);
 </script>
 
-<ol class="grid gap-3 sm:grid-cols-2">
+<ol {@attach revealChildren({ y: 24, gap: 0.05 })} class="grid gap-3 sm:grid-cols-2">
 	{#each modules as m (m.slug)}
 		{@const complete = showProgress && progress.isComplete(m.slug, m.checklist.length)}
 		<li>

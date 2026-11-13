@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { reveal, revealChildren } from '#lib/motion.js';
 	import { asset } from '$app/paths';
 	import type { AssetPath } from '$app/types';
 	import { t } from '#lib/i18n.js';
@@ -58,7 +59,7 @@
 	<h1 class="text-4xl font-extrabold tracking-tight text-ink">{c.title}</h1>
 	<p class="mt-3 max-w-2xl text-lg text-body">{c.intro}</p>
 
-	<ul class="mt-8 space-y-4">
+	<ul {@attach revealChildren({ y: 24 })} class="mt-8 space-y-4">
 		{#each data.downloads as item (item.slug)}
 			{@const file = item.href.endsWith('.csv')}
 			<li
@@ -88,7 +89,7 @@
 		</ol>
 	</div>
 
-	<div class="mt-12 rounded-2xl bg-raised p-6">
+	<div {@attach reveal()} class="mt-12 rounded-2xl bg-raised p-6">
 		<h2 class="text-xl font-bold text-ink">{c.ctaTitle}</h2>
 		<p class="mt-2 text-body">{c.ctaText}</p>
 		<div class="mt-5">

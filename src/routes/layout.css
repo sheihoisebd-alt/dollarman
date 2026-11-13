@@ -93,7 +93,8 @@
 			0 12px 34px -6px rgb(255 176 20 / 0.7);
 		transition:
 			filter 150ms,
-			box-shadow 150ms;
+			box-shadow 150ms,
+			transform 150ms;
 	}
 	.btn-gold:hover {
 		filter: brightness(1.07) saturate(1.1);
@@ -186,12 +187,16 @@
 
 	/* Gold gradient text for headline highlights */
 	.text-gold {
+		/* The gradient repeats so it can flow sideways forever without a jump (see Motion) */
 		background: linear-gradient(
 			100deg,
 			var(--color-gold-200) 0%,
-			var(--color-gold-400) 45%,
-			var(--color-gold-600) 100%
+			var(--color-gold-400) 25%,
+			var(--color-gold-600) 50%,
+			var(--color-gold-400) 75%,
+			var(--color-gold-200) 100%
 		);
+		background-size: 200% auto;
 		-webkit-background-clip: text;
 		background-clip: text;
 		color: transparent;
@@ -284,6 +289,158 @@
 }
 
 /* Paper: the same tokens, black on white. */
+/* ── Motion ──────────────────────────────────────────────────────────────────────────────────
+ * Everything here is decoration: the page reads the same without it. The base layer turns every
+ * animation off under prefers-reduced-motion, and the scroll reveals only run in browsers that
+ * support scroll-driven animations, so content is never left hidden.
+ */
+@keyframes enter-up {
+	from {
+		opacity: 0;
+		transform: translateY(28px);
+	}
+}
+@keyframes enter-down {
+	from {
+		opacity: 0;
+		transform: translateY(-18px);
+	}
+}
+@keyframes gold-flow {
+	to {
+		background-position: -200% center;
+	}
+}
+/* A band of light that sweeps across a button, then rests */
+@keyframes shine {
+	0% {
+		background-position: 160% 0;
+	}
+	45%,
+	100% {
+		background-position: -60% 0;
+	}
+}
+/* A ring of light that grows out of the main call-to-action */
+@keyframes cta-ring {
+	0% {
+		opacity: 0.85;
+		box-shadow: 0 0 0 0 var(--ring, rgb(42 171 238 / 0.6));
+	}
+	100% {
+		opacity: 0;
+		box-shadow: 0 0 0 16px var(--ring, rgb(42 171 238 / 0));
+	}
+}
+@keyframes icon-nudge {
+	0%,
+	70%,
+	100% {
+		transform: none;
+	}
+	80% {
+		transform: translate(2px, -2px) rotate(-8deg);
+	}
+	90% {
+		transform: translate(-1px, 1px) rotate(4deg);
+	}
+}
+
+@layer components {
+	/* Gold headline text flows slowly */
+	.text-gold {
+		animation: gold-flow 8s linear infinite;
+	}
+
+	/* Every call-to-action button gets the sweeping shine */
+	:is(.btn-telegram, .btn-gold, .btn-youtube, .btn-facebook, .btn-instagram, .btn-tiktok) {
+		position: relative;
+		isolation: isolate;
+	}
+	:is(.btn-telegram, .btn-gold, .btn-youtube, .btn-facebook, .btn-instagram, .btn-tiktok)::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		pointer-events: none;
+		background: linear-gradient(
+				105deg,
+				transparent 35%,
+				rgb(255 255 255 / 0.45) 50%,
+				transparent 65%
+			)
+			no-repeat;
+		background-size: 250% 100%;
+		background-position: 160% 0;
+		animation: shine 4s ease-in-out infinite;
+		animation-delay: var(--shine-delay, 1.2s);
+	}
+	:is(.btn-telegram, .btn-gold):hover {
+		transform: translateY(-2px) scale(1.02);
+	}
+	:is(.btn-telegram, .btn-gold):active {
+		transform: scale(0.98);
+	}
+	/* The paper plane gives a little nudge now and then */
+	.btn-telegram svg {
+		animation: icon-nudge 4s ease-in-out infinite;
+		animation-delay: var(--shine-delay, 1.2s);
+	}
+
+	/* Main CTAs: a ring of light keeps growing out of the button */
+	.cta-pulse::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		border-radius: inherit;
+		pointer-events: none;
+		animation: cta-ring 2.2s ease-out infinite;
+	}
+
+	/* Page load: the header drops in, hero pieces rise one after another */
+	.enter-down {
+		animation: enter-down 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+	}
+	.hero-enter > * {
+		animation: enter-up 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+	}
+	.hero-enter > :nth-child(1) {
+		animation-delay: 0.1s;
+	}
+	.hero-enter > :nth-child(2) {
+		animation-delay: 0.22s;
+	}
+	.hero-enter > :nth-child(3) {
+		animation-delay: 0.36s;
+	}
+	.hero-enter > :nth-child(4) {
+		animation-delay: 0.48s;
+	}
+	.hero-enter > :nth-child(5) {
+		animation-delay: 0.6s;
+	}
+	.enter-late {
+		animation: enter-up 1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.7s both;
+	}
+
+	/* Cards in grids lift when you point at them ("translate" stays free of the reveal's transform) */
+	main :is(.grid, [class*='columns-'], .flex-wrap) > li {
+		transition: translate 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+	}
+	main :is(.grid, [class*='columns-'], .flex-wrap) > li:hover {
+		translate: 0 -4px;
+	}
+}
+
+/* Scroll reveals are done with Motion (src/lib/motion.ts), so they work in every browser. */
+
+/* Page changes cross-fade where the browser supports view transitions */
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation-duration: 0.25s;
+}
+
 @media print {
 	:root {
 		color-scheme: light;

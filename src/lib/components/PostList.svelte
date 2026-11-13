@@ -2,6 +2,7 @@
 	import type { Lang, Post } from '#lib/types.js';
 	import { locale, num, t } from '#lib/i18n.js';
 	import { href } from '#lib/paths.svelte.js';
+	import { revealChildren } from '#lib/motion.js';
 
 	let { lang, posts }: { lang: Lang; posts: Post[] } = $props();
 
@@ -14,7 +15,7 @@
 		});
 </script>
 
-<ul class="grid gap-4 md:grid-cols-2">
+<ul {@attach revealChildren()} class="grid gap-4 md:grid-cols-2">
 	{#each posts as post (post.slug)}
 		<li>
 			<article

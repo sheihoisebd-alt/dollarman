@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { reveal } from '#lib/motion.js';
 	import { progress } from '#lib/progress.svelte.js';
 	import { localizePath, num, t } from '#lib/i18n.js';
 	import { href } from '#lib/paths.svelte.js';
@@ -135,7 +136,7 @@
 	<h2 id="modules" class="text-2xl font-bold text-ink">{c.listTitle}</h2>
 	<div class="mt-6"><ModuleList {lang} modules={data.modules} showProgress /></div>
 
-	<div class="panel-cta mt-12 rounded-2xl p-6 text-ink sm:p-8">
+	<div {@attach reveal({ scale: 0.96 })} class="panel-cta mt-12 rounded-2xl p-6 text-ink sm:p-8">
 		<h2 class="text-2xl font-bold">{c.ctaTitle}</h2>
 		<p class="mt-2 max-w-xl text-body">{c.ctaText}</p>
 		<div class="mt-6">

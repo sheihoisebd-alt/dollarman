@@ -3,6 +3,7 @@
 	import { href } from '#lib/paths.svelte.js';
 	import NumberField from '#lib/components/NumberField.svelte';
 	import ToolLayout from '#lib/components/ToolLayout.svelte';
+	import Tween from '#lib/components/Tween.svelte';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -116,11 +117,16 @@
 	{#snippet result()}
 		{#if calc}
 			<p class="text-sm text-body">{c.size}</p>
-			<p class="mt-1 text-4xl font-bold">{formatNumber(calc.lots)} {c.lots}</p>
+			<p class="mt-1 text-4xl font-bold tabular-nums">
+				<Tween value={calc.lots} format={(n) => formatNumber(n)} />
+				{c.lots}
+			</p>
 			<dl class="mt-6 space-y-3 border-t border-line-strong pt-5">
 				<div class="flex justify-between gap-4">
 					<dt class="text-body">{c.atRisk}</dt>
-					<dd class="font-semibold">{formatUsd(calc.riskAmount)}</dd>
+					<dd class="font-semibold tabular-nums">
+						<Tween value={calc.riskAmount} format={formatUsd} />
+					</dd>
 				</div>
 				<div class="flex justify-between gap-4">
 					<dt class="text-body">{c.units}</dt>

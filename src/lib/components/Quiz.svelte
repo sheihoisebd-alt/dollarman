@@ -1,7 +1,11 @@
 <script lang="ts">
 	import type { Lang, QuizQuestion } from '#lib/types.js';
 	import { num } from '#lib/i18n.js';
+	import { tick } from 'svelte';
 	import { progress } from '#lib/progress.svelte.js';
+	import { bounce, reveal, shake } from '#lib/motion.js';
+
+	let form = $state<HTMLFormElement>();
 
 	let { lang, slug, questions }: { lang: Lang; slug: string; questions: QuizQuestion[] } = $props();
 
@@ -33,10 +37,13 @@
 	const answeredAll = $derived(Object.keys(answers).length === questions.length);
 	const score = $derived(questions.filter((q, i) => answers[i] === q.answerIndex).length);
 
-	function submit(event: SubmitEvent) {
+	async function submit(event: SubmitEvent) {
 		event.preventDefault();
 		submitted = true;
 		progress.setQuizScore(slug, score);
+		await tick();
+		form?.querySelectorAll('[data-answer="correct"]').forEach((el) => bounce(el));
+		form?.querySelectorAll('[data-answer="wrong"]').forEach((el) => shake(el));
 	}
 
 	function retry() {
@@ -49,7 +56,7 @@
 	<h2 id="quiz-{slug}" class="text-xl font-bold text-ink">{c.title}</h2>
 	<p class="mt-1 text-sm text-muted">{c.intro}</p>
 
-	<form onsubmit={submit} class="mt-5 space-y-6">
+	<form bind:this={form} onsubmit={submit} class="mt-5 space-y-6">
 		{#each questions as q, qi (qi)}
 			<fieldset>
 				<legend class="font-semibold text-ink">{num(lang, qi + 1)}. {q.question}</legend>
@@ -58,6 +65,7 @@
 						{@const correct = submitted && oi === q.answerIndex}
 						{@const wrong = submitted && answers[qi] === oi && oi !== q.answerIndex}
 						<label
+							data-answer={correct ? 'correct' : wrong ? 'wrong' : undefined}
 							class={[
 								'flex min-h-12 cursor-pointer items-start gap-3 rounded-xl border p-3',
 								correct
@@ -91,7 +99,11 @@
 		{/each}
 
 		{#if submitted}
-			<div class="flex flex-wrap items-center gap-4 rounded-xl bg-raised p-4" role="status">
+			<div
+				{@attach reveal({ y: 16, scale: 0.95 })}
+				class="flex flex-wrap items-center gap-4 rounded-xl bg-raised p-4"
+				role="status"
+			>
 				<p class="font-semibold text-ink">
 					{c.score(num(lang, score), num(lang, questions.length))}
 				</p>

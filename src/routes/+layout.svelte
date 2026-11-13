@@ -1,10 +1,11 @@
 <script lang="ts">
 	import './layout.css';
 	import { onMount } from 'svelte';
-	import { afterNavigate } from '$app/navigation';
+	import { afterNavigate, onNavigate } from '$app/navigation';
 	import { captureAttribution } from '#lib/attribution.svelte.js';
 	import { loadConsent } from '#lib/consent.svelte.js';
 	import { t } from '#lib/i18n.js';
+	import { markNavigated } from '#lib/motion.js';
 	import { progress } from '#lib/progress.svelte.js';
 	import { trackPageView } from '#lib/tracking.js';
 	import ConsentBanner from '#lib/components/ConsentBanner.svelte';
@@ -25,6 +26,19 @@
 
 	// Fires after hydration and after every client-side navigation.
 	afterNavigate(() => trackPageView());
+
+	// Moving between pages: the old page fades out as the new one fades in (where the browser
+	// supports view transitions), and the new page's sections animate in.
+	onNavigate((navigation) => {
+		markNavigated();
+		if (!document.startViewTransition) return;
+		return new Promise((resolve) => {
+			document.startViewTransition(async () => {
+				resolve();
+				await navigation.complete;
+			});
+		});
+	});
 </script>
 
 <svelte:head>

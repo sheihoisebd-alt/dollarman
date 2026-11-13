@@ -44,5 +44,8 @@
 	"description": "Dollar Man Learning: free beginner trading course",
 	"engines": {
 		"node": ">=22.18.0"
+	},
+	"dependencies": {
+		"motion": "^14.14.0"
 	}
 }

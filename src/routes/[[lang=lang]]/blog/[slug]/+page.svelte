@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { reveal } from '#lib/motion.js';
 	import { locale, localizePath, num, t } from '#lib/i18n.js';
 	import { href } from '#lib/paths.svelte.js';
 	import { absoluteUrl, site } from '#lib/site.js';
@@ -104,7 +105,10 @@
 		<a href={href(lang, '/disclaimer')} class="text-gold-300 underline">{common.readDisclaimer}</a>.
 	</p>
 
-	<section class="panel-cta mt-10 rounded-2xl p-6 text-ink sm:p-8">
+	<section
+		{@attach reveal({ scale: 0.96 })}
+		class="panel-cta mt-10 rounded-2xl p-6 text-ink sm:p-8"
+	>
 		<h2 class="text-2xl font-bold">{c.ctaTitle}</h2>
 		<p class="mt-2 text-body">{c.ctaText}</p>
 		<div class="mt-6">

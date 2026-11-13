@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { reveal, revealChildren } from '#lib/motion.js';
 	import { progress } from '#lib/progress.svelte.js';
 	import { num, t } from '#lib/i18n.js';
 	import { href } from '#lib/paths.svelte.js';
@@ -113,7 +114,7 @@
 	<div class="container-page max-w-3xl space-y-10 pb-16">
 		<section aria-labelledby="outcomes" class="rounded-2xl border border-line p-5 sm:p-6">
 			<h2 id="outcomes" class="text-xl font-bold text-ink">{c.outcomes}</h2>
-			<ul class="mt-4 space-y-2.5">
+			<ul {@attach revealChildren({ x: -20, y: 0, scale: 1 })} class="mt-4 space-y-2.5">
 				{#each m.outcomes as outcome (outcome)}
 					<li class="flex gap-3 text-ink">
 						<Icon name="check" class="mt-0.5 size-5 shrink-0 text-gold-300" />{outcome}
@@ -124,7 +125,10 @@
 
 		<section aria-labelledby="lessons">
 			<h2 id="lessons" class="text-xl font-bold text-ink">{c.lessons}</h2>
-			<ol class="mt-4 divide-y divide-line rounded-2xl border border-line">
+			<ol
+				{@attach revealChildren({ y: 14, scale: 1, gap: 0.06 })}
+				class="mt-4 divide-y divide-line rounded-2xl border border-line"
+			>
 				{#each m.lessons as lesson, i (lesson)}
 					<li class="flex items-center gap-3 p-4">
 						<span
@@ -158,7 +162,11 @@
 		<Checklist {lang} slug={m.slug} items={m.checklist} />
 
 		<!-- Telegram CTA at the end of every module -->
-		<section class="panel-cta rounded-2xl p-6 text-ink sm:p-8" aria-labelledby="module-cta">
+		<section
+			{@attach reveal({ scale: 0.96 })}
+			class="panel-cta rounded-2xl p-6 text-ink sm:p-8"
+			aria-labelledby="module-cta"
+		>
 			<h2 id="module-cta" class="text-2xl font-bold">
 				{data.next ? c.ctaNext(num(lang, data.next.position)) : c.ctaEnd}
 			</h2>
@@ -174,7 +182,7 @@
 			</div>
 		</section>
 
-		<nav aria-label={c.nav} class="grid gap-3 sm:grid-cols-2">
+		<nav {@attach revealChildren({ y: 20 })} aria-label={c.nav} class="grid gap-3 sm:grid-cols-2">
 			{#if data.prev}
 				<a
 					href={href(lang, `/course/${data.prev.slug}`)}

@@ -2,6 +2,7 @@
 	import { formatNumber, riskReward } from '#lib/calc.js';
 	import NumberField from '#lib/components/NumberField.svelte';
 	import ToolLayout from '#lib/components/ToolLayout.svelte';
+	import Tween from '#lib/components/Tween.svelte';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -97,7 +98,9 @@
 			<p class="text-body">{c.errors[calc]}</p>
 		{:else}
 			<p class="text-sm text-body">{c.ratio(calc.direction === 'long' ? c.buy : c.sell)}</p>
-			<p class="mt-1 text-4xl font-bold">1 : {formatNumber(calc.ratio)}</p>
+			<p class="mt-1 text-4xl font-bold tabular-nums">
+				1 : <Tween value={calc.ratio} format={(n) => formatNumber(n)} />
+			</p>
 			<dl class="mt-6 space-y-3 border-t border-line-strong pt-5">
 				<div class="flex justify-between gap-4">
 					<dt class="text-body">{c.risk}</dt>
@@ -109,7 +112,9 @@
 				</div>
 				<div class="flex justify-between gap-4">
 					<dt class="text-body">{c.breakEven}</dt>
-					<dd class="font-semibold">{formatNumber(calc.breakEvenWinRate * 100, 1)}%</dd>
+					<dd class="font-semibold tabular-nums">
+						<Tween value={calc.breakEvenWinRate * 100} format={(n) => formatNumber(n, 1)} />%
+					</dd>
 				</div>
 			</dl>
 			<p class="mt-5 text-sm text-body">{c.costs}</p>

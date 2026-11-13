@@ -26,7 +26,7 @@
 </script>
 
 <!-- A floating rounded bar, the same on phones (logo, language, menu) and desktop (links and CTA) -->
-<header class="sticky top-0 z-30 px-3 pt-3 sm:px-4">
+<header class="enter-down sticky top-0 z-30 px-3 pt-3 sm:px-4">
 	<div
 		class="relative mx-auto flex h-14 max-w-5xl items-center justify-between gap-3 rounded-2xl border border-line-strong/70 bg-surface/80 px-3 shadow-lg shadow-black/40 backdrop-blur-md sm:h-16 sm:px-5"
 	>

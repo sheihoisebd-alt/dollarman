@@ -7,6 +7,7 @@
 	import type { Lang, Module } from '#lib/types.js';
 	import { t } from '#lib/i18n.js';
 	import { href } from '#lib/paths.svelte.js';
+	import { tilt } from '#lib/motion.js';
 	import { site } from '#lib/site.js';
 	import Icon from './Icon.svelte';
 	import LessonArt from './LessonArt.svelte';
@@ -73,6 +74,7 @@
 
 	<!-- Centre: the featured card -->
 	<div
+		{@attach tilt(4)}
 		class="relative order-1 overflow-hidden rounded-3xl border border-line-strong bg-surface shadow-2xl ring-1 shadow-black/60 ring-gold-400/15 lg:order-none"
 	>
 		{#if playing && videoId}
@@ -159,6 +161,7 @@
 
 	<!-- Right: the course outline -->
 	<div
+		{@attach tilt(3)}
 		class="order-3 rounded-2xl border border-line bg-surface p-4 shadow-xl shadow-black/40 lg:order-none lg:mt-14"
 	>
 		<p class="text-lg font-extrabold tracking-tight text-ink">{s.courseTitle}</p>

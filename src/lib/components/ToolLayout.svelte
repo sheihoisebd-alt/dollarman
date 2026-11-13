@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { reveal, revealChildren } from '#lib/motion.js';
 	import type { Snippet } from 'svelte';
 	import { t } from '#lib/i18n.js';
 	import { currentLang, href } from '#lib/paths.svelte.js';
@@ -66,7 +67,7 @@
 	<h1 class="mt-2 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">{title}</h1>
 	<p class="mt-3 max-w-2xl text-lg text-body">{intro}</p>
 
-	<div class="mt-8 grid gap-6 md:grid-cols-2">
+	<div {@attach revealChildren({ y: 30, gap: 0.12 })} class="mt-8 grid gap-6 md:grid-cols-2">
 		<form
 			class="space-y-5 rounded-2xl border border-line bg-surface p-5 sm:p-6"
 			onsubmit={(e) => e.preventDefault()}
@@ -87,7 +88,7 @@
 		{@render explainer()}
 	</div>
 
-	<div class="mt-12 rounded-2xl bg-raised p-6">
+	<div {@attach reveal()} class="mt-12 rounded-2xl bg-raised p-6">
 		<h2 class="text-xl font-bold text-ink">{c.ctaTitle}</h2>
 		<p class="mt-2 text-body">{c.ctaText}</p>
 		<div class="mt-5">

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { revealChildren } from '#lib/motion.js';
 	import { href } from '#lib/paths.svelte.js';
 	import Icon from '#lib/components/Icon.svelte';
 	import Seo from '#lib/components/Seo.svelte';
@@ -39,7 +40,7 @@
 	<p class="mt-3 max-w-2xl text-lg text-body">{c.intro}</p>
 
 	<h2 class="mt-10 text-2xl font-bold text-ink">{c.calculators}</h2>
-	<ul class="mt-4 grid gap-4 md:grid-cols-3">
+	<ul {@attach revealChildren()} class="mt-4 grid gap-4 md:grid-cols-3">
 		{#each data.calculators as tool (tool.slug)}
 			<li>
 				<a
@@ -55,7 +56,7 @@
 	</ul>
 
 	<h2 class="mt-12 text-2xl font-bold text-ink">{c.downloads}</h2>
-	<ul class="mt-4 grid gap-4 md:grid-cols-2">
+	<ul {@attach revealChildren()} class="mt-4 grid gap-4 md:grid-cols-2">
 		{#each data.downloads as tool (tool.slug)}
 			<li>
 				<a

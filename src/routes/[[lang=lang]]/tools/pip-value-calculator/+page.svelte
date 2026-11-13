@@ -3,6 +3,7 @@
 	import { href } from '#lib/paths.svelte.js';
 	import NumberField from '#lib/components/NumberField.svelte';
 	import ToolLayout from '#lib/components/ToolLayout.svelte';
+	import Tween from '#lib/components/Tween.svelte';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -136,7 +137,7 @@
 	{#snippet result()}
 		{#if value !== null}
 			<p class="text-sm text-body">{c.result(pair.pipSize, lots)}</p>
-			<p class="mt-1 text-4xl font-bold">{formatUsd(value)}</p>
+			<p class="mt-1 text-4xl font-bold tabular-nums"><Tween {value} format={formatUsd} /></p>
 			<dl class="mt-6 space-y-3 border-t border-line-strong pt-5">
 				<div class="flex justify-between gap-4">
 					<dt class="text-body">{c.pips10}</dt>

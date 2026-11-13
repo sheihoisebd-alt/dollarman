@@ -7,6 +7,9 @@
 	import { t } from '#lib/i18n.js';
 	import { reviews as allReviews } from '#lib/reviews.js';
 	import { site } from '#lib/site.js';
+	import { animate, inView } from 'motion';
+	import type { Attachment } from 'svelte/attachments';
+	import { popChildren, reveal, revealChildren } from '#lib/motion.js';
 
 	let { lang }: { lang: Lang } = $props();
 	const r = $derived(t(lang).home.reviews);
@@ -24,11 +27,22 @@
 	const C = 2 * Math.PI * 26;
 
 	let expanded = $state(false);
+
+	// The rating ring draws itself round to the average when it comes into view
+	const drawRing: Attachment<SVGCircleElement> = (node) => {
+		if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+		const end = Number(node.getAttribute('stroke-dashoffset'));
+		node.style.strokeDashoffset = String(C);
+		return inView(node, () => {
+			animate(node, { strokeDashoffset: [C, end] }, { duration: 1.4, ease: [0.2, 0.7, 0.2, 1] });
+		});
+	};
 </script>
 
 <section class="relative py-14 sm:py-20" aria-labelledby="reviews">
 	<div class="container-page">
 		<h2
+			{@attach reveal()}
 			id="reviews"
 			class="text-center text-3xl font-extrabold tracking-tight text-ink uppercase sm:text-4xl"
 		>
@@ -49,6 +63,7 @@
 						stroke-linecap="round"
 						stroke-dasharray={C}
 						stroke-dashoffset={C * (1 - avg / 5)}
+						{@attach drawRing}
 					/>
 				</svg>
 				<span class="text-lg font-extrabold text-gold-300">{fmt(avg, 1)}</span>
@@ -58,6 +73,7 @@
 
 		<div class="relative mt-10">
 			<ul
+				{@attach revealChildren({ gap: 0.1 })}
 				class={[
 					'columns-1 gap-4 sm:columns-2 lg:columns-3',
 					!expanded && 'max-h-[56rem] overflow-hidden sm:max-h-[44rem]'
@@ -65,6 +81,7 @@
 			>
 				{#each reviews as review (review.name)}
 					<li
+						{@attach popChildren('.star', 0.08)}
 						class="mb-4 break-inside-avoid rounded-2xl border border-line bg-surface shadow-xl shadow-black/40"
 					>
 						<div class="flex items-center gap-3 border-b border-line p-4">
@@ -133,7 +150,7 @@
 								{#each [1, 2, 3, 4, 5] as star (star)}
 									<svg
 										viewBox="0 0 24 24"
-										class="size-4"
+										class="star size-4"
 										fill={star <= review.rating ? 'currentColor' : 'none'}
 										stroke="currentColor"
 										stroke-width="1.5"

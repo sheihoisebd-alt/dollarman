@@ -2,6 +2,7 @@
 	import type { Lang } from '#lib/types.js';
 	import { num } from '#lib/i18n.js';
 	import { progress } from '#lib/progress.svelte.js';
+	import { bounce, revealChildren } from '#lib/motion.js';
 
 	let { lang, slug, items }: { lang: Lang; slug: string; items: string[] } = $props();
 
@@ -35,7 +36,7 @@
 	<p class="mt-1 text-sm text-muted">
 		{c.intro}
 	</p>
-	<ul class="mt-4 space-y-2">
+	<ul {@attach revealChildren({ y: 16, scale: 1, gap: 0.06 })} class="mt-4 space-y-2">
 		{#each items as item, i (i)}
 			<li>
 				<label
@@ -46,7 +47,10 @@
 						class="mt-0.5 size-5 shrink-0 accent-gold-400"
 						checked={progress.isChecked(slug, i)}
 						disabled={!progress.loaded}
-						onchange={() => progress.toggle(slug, i)}
+						onchange={(e) => {
+							progress.toggle(slug, i);
+							if (e.currentTarget.checked) bounce(e.currentTarget.closest('label')!);
+						}}
 					/>
 					<span class="text-ink">{item}</span>
 				</label>
