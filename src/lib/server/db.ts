@@ -80,29 +80,34 @@ const toPost = (r: Row): Post => ({
 	tags: JSON.parse(String(r.tags))
 });
 
+// Tags are joined within the same language as the post.
 const POST_SELECT = `
 	SELECT p.*, COALESCE(
 		(SELECT json_group_array(json_object('slug', t.slug, 'name', t.name))
-		 FROM post_tags pt JOIN tags t ON t.slug = pt.tag_slug WHERE pt.post_slug = p.slug),
+		 FROM post_tags pt JOIN tags t ON t.lang = pt.lang AND t.slug = pt.tag_slug
+		 WHERE pt.lang = p.lang AND pt.post_slug = p.slug),
 		'[]') AS tags
 	FROM posts p`;
 
-export async function listModules(): Promise<Module[]> {
+export async function listModules(lang: Lang): Promise<Module[]> {
 	const db = await readDb();
-	return (db.prepare('SELECT * FROM modules ORDER BY position').all() as Row[]).map(toModule);
+	return (
+		db.prepare('SELECT * FROM modules WHERE lang = ? ORDER BY position').all(lang) as Row[]
+	).map(toModule);
 }
 
-export async function getModule(slug: string): Promise<Module | undefined> {
+export async function getModule(lang: Lang, slug: string): Promise<Module | undefined> {
 	const db = await readDb();
-	const row = db.prepare('SELECT * FROM modules WHERE slug = ?').get(slug) as Row | undefined;
+	const row = db.prepare('SELECT * FROM modules WHERE lang = ? AND slug = ?').get(lang, slug) as
+		Row | undefined;
 	return row && toModule(row);
 }
 
-export async function listQuiz(moduleSlug: string): Promise<QuizQuestion[]> {
+export async function listQuiz(lang: Lang, moduleSlug: string): Promise<QuizQuestion[]> {
 	const db = await readDb();
 	const rows = db
-		.prepare('SELECT * FROM quiz_questions WHERE module_slug = ? ORDER BY position')
-		.all(moduleSlug) as Row[];
+		.prepare('SELECT * FROM quiz_questions WHERE lang = ? AND module_slug = ? ORDER BY position')
+		.all(lang, moduleSlug) as Row[];
 	return rows.map((r) => ({
 		question: String(r.question),
 		options: JSON.parse(String(r.options)),
@@ -111,12 +116,14 @@ export async function listQuiz(moduleSlug: string): Promise<QuizQuestion[]> {
 	}));
 }
 
-export async function listTools(kind?: Tool['kind']): Promise<Tool[]> {
+export async function listTools(lang: Lang, kind?: Tool['kind']): Promise<Tool[]> {
 	const db = await readDb();
 	const rows = (
 		kind
-			? db.prepare('SELECT * FROM tools WHERE kind = ? ORDER BY position').all(kind)
-			: db.prepare('SELECT * FROM tools ORDER BY position').all()
+			? db
+					.prepare('SELECT * FROM tools WHERE lang = ? AND kind = ? ORDER BY position')
+					.all(lang, kind)
+			: db.prepare('SELECT * FROM tools WHERE lang = ? ORDER BY position').all(lang)
 	) as Row[];
 	return rows.map((r) => ({
 		slug: String(r.slug),
@@ -128,35 +135,40 @@ export async function listTools(kind?: Tool['kind']): Promise<Tool[]> {
 	}));
 }
 
-export async function listPosts(tag?: string): Promise<Post[]> {
+export async function listPosts(lang: Lang, tag?: string): Promise<Post[]> {
 	const db = await readDb();
 	const rows = (
 		tag
 			? db
 					.prepare(
-						`${POST_SELECT} WHERE EXISTS (SELECT 1 FROM post_tags WHERE post_slug = p.slug AND tag_slug = ?)
+						`${POST_SELECT} WHERE p.lang = ? AND EXISTS (
+							SELECT 1 FROM post_tags WHERE lang = p.lang AND post_slug = p.slug AND tag_slug = ?)
 						 ORDER BY p.published DESC`
 					)
-					.all(tag)
-			: db.prepare(`${POST_SELECT} ORDER BY p.published DESC`).all()
+					.all(lang, tag)
+			: db.prepare(`${POST_SELECT} WHERE p.lang = ? ORDER BY p.published DESC`).all(lang)
 	) as Row[];
 	return rows.map(toPost);
 }
 
-export async function getPost(slug: string): Promise<Post | undefined> {
+export async function getPost(lang: Lang, slug: string): Promise<Post | undefined> {
 	const db = await readDb();
-	const row = db.prepare(`${POST_SELECT} WHERE p.slug = ?`).get(slug) as Row | undefined;
+	const row = db.prepare(`${POST_SELECT} WHERE p.lang = ? AND p.slug = ?`).get(lang, slug) as
+		Row | undefined;
 	return row && toPost(row);
 }
 
-export async function listTags(): Promise<{ slug: string; name: string; count: number }[]> {
+export async function listTags(
+	lang: Lang
+): Promise<{ slug: string; name: string; count: number }[]> {
 	const db = await readDb();
 	const rows = db
 		.prepare(
 			`SELECT t.slug, t.name, COUNT(pt.post_slug) AS count FROM tags t
-			 JOIN post_tags pt ON pt.tag_slug = t.slug GROUP BY t.slug ORDER BY t.name`
+			 JOIN post_tags pt ON pt.lang = t.lang AND pt.tag_slug = t.slug
+			 WHERE t.lang = ? GROUP BY t.slug ORDER BY t.name`
 		)
-		.all() as Row[];
+		.all(lang) as Row[];
 	return rows.map((r) => ({ slug: String(r.slug), name: String(r.name), count: Number(r.count) }));
 }
 

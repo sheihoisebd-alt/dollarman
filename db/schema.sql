@@ -10,41 +10,51 @@ CREATE TABLE faqs (
 );
 
 CREATE TABLE modules (
-	slug          TEXT PRIMARY KEY,
-	position      INTEGER NOT NULL UNIQUE,
+	lang          TEXT NOT NULL CHECK (lang IN ('en', 'bn')),
+	slug          TEXT NOT NULL,
+	position      INTEGER NOT NULL,
 	title         TEXT NOT NULL,
 	summary       TEXT NOT NULL,
 	duration_min  INTEGER NOT NULL,
 	preview       INTEGER NOT NULL DEFAULT 0 CHECK (preview IN (0, 1)),
 	outcomes      TEXT NOT NULL DEFAULT '[]', -- JSON string[]
 	lessons       TEXT NOT NULL DEFAULT '[]', -- JSON string[] (lesson titles)
-	checklist     TEXT NOT NULL DEFAULT '[]'  -- JSON string[]
+	checklist     TEXT NOT NULL DEFAULT '[]', -- JSON string[]
+	PRIMARY KEY (lang, slug),
+	UNIQUE (lang, position)
 );
 
 CREATE TABLE post_tags (
-	post_slug     TEXT NOT NULL REFERENCES posts(slug) ON DELETE CASCADE,
-	tag_slug      TEXT NOT NULL REFERENCES tags(slug) ON DELETE CASCADE,
-	PRIMARY KEY (post_slug, tag_slug)
+	lang          TEXT NOT NULL,
+	post_slug     TEXT NOT NULL,
+	tag_slug      TEXT NOT NULL,
+	PRIMARY KEY (lang, post_slug, tag_slug),
+	FOREIGN KEY (lang, post_slug) REFERENCES posts (lang, slug) ON DELETE CASCADE,
+	FOREIGN KEY (lang, tag_slug) REFERENCES tags (lang, slug) ON DELETE CASCADE
 );
 
 CREATE TABLE posts (
-	slug          TEXT PRIMARY KEY,
+	lang          TEXT NOT NULL CHECK (lang IN ('en', 'bn')),
+	slug          TEXT NOT NULL,
 	title         TEXT NOT NULL,
 	description   TEXT NOT NULL,
 	published     TEXT NOT NULL, -- ISO date
 	updated       TEXT,
-	reading_min   INTEGER NOT NULL
+	reading_min   INTEGER NOT NULL,
+	PRIMARY KEY (lang, slug)
 );
 
 CREATE TABLE quiz_questions (
 	id            INTEGER PRIMARY KEY,
-	module_slug   TEXT NOT NULL REFERENCES modules(slug) ON DELETE CASCADE,
+	lang          TEXT NOT NULL,
+	module_slug   TEXT NOT NULL,
 	position      INTEGER NOT NULL,
 	question      TEXT NOT NULL,
 	options       TEXT NOT NULL, -- JSON string[]
 	answer_index  INTEGER NOT NULL,
 	explanation   TEXT NOT NULL,
-	UNIQUE (module_slug, position)
+	UNIQUE (lang, module_slug, position),
+	FOREIGN KEY (lang, module_slug) REFERENCES modules (lang, slug) ON DELETE CASCADE
 );
 
 CREATE TABLE schema_migrations (
@@ -53,22 +63,26 @@ CREATE TABLE schema_migrations (
 	);
 
 CREATE TABLE tags (
-	slug          TEXT PRIMARY KEY,
-	name          TEXT NOT NULL
+	lang          TEXT NOT NULL CHECK (lang IN ('en', 'bn')),
+	slug          TEXT NOT NULL,
+	name          TEXT NOT NULL,
+	PRIMARY KEY (lang, slug)
 );
 
 CREATE TABLE tools (
-	slug          TEXT PRIMARY KEY,
+	lang          TEXT NOT NULL CHECK (lang IN ('en', 'bn')),
+	slug          TEXT NOT NULL,
 	position      INTEGER NOT NULL,
 	kind          TEXT NOT NULL CHECK (kind IN ('calculator', 'download')),
 	title         TEXT NOT NULL,
 	description   TEXT NOT NULL,
-	href          TEXT NOT NULL,
-	file_format   TEXT          -- e.g. 'CSV', 'Printable page'; NULL for calculators
+	href          TEXT NOT NULL, -- language-neutral path, e.g. /tools/pip-value-calculator
+	file_format   TEXT,          -- e.g. 'CSV', 'Printable page'; NULL for calculators
+	PRIMARY KEY (lang, slug)
 );
 
 CREATE INDEX faqs_by_lang ON faqs (lang, position);
 
-CREATE INDEX posts_by_date ON posts (published DESC);
+CREATE INDEX posts_by_date ON posts (lang, published DESC);
 
-CREATE INDEX quiz_by_module ON quiz_questions (module_slug, position);
+CREATE INDEX quiz_by_module ON quiz_questions (lang, module_slug, position);

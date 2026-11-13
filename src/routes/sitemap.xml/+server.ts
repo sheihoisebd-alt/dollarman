@@ -1,23 +1,21 @@
 import { absoluteUrl } from '#lib/site.js';
+import { localizePath } from '#lib/i18n.js';
 import { listModules, listPosts, listTags, listTools } from '#lib/server/db.js';
 import type { RequestHandler } from './$types';
 
 export const prerender = true;
 
 export const GET: RequestHandler = async () => {
+	// Slugs are the same in both languages, so the English lists give every page.
 	const [modules, posts, tags, tools] = await Promise.all([
-		listModules(),
-		listPosts(),
-		listTags(),
-		listTools()
+		listModules('en'),
+		listPosts('en'),
+		listTags('en'),
+		listTools('en')
 	]);
 
-	// The English and Bangla home pages are translations of each other.
-	const homeAlternates = { en: '/', bn: '/bn', 'x-default': '/' };
-
-	const pages: { path: string; lastmod?: string; alternates?: Record<string, string> }[] = [
-		{ path: '/', alternates: homeAlternates },
-		{ path: '/bn', alternates: homeAlternates },
+	const pages: { path: string; lastmod?: string }[] = [
+		{ path: '/' },
 		{ path: '/course' },
 		...modules.map((m) => ({ path: `/course/${m.slug}` })),
 		{ path: '/tools' },
@@ -33,21 +31,31 @@ export const GET: RequestHandler = async () => {
 		{ path: '/terms' }
 	];
 
+	// Every page is listed in Bangla (default) and English, each pointing at both versions.
+	const alternates = (path: string) =>
+		[
+			['bn', localizePath('bn', path)],
+			['en', localizePath('en', path)],
+			['x-default', localizePath('bn', path)]
+		]
+			.map(
+				([lang, href]) =>
+					`<xhtml:link rel="alternate" hreflang="${lang}" href="${absoluteUrl(href)}"/>`
+			)
+			.join('');
+
+	const urls = pages.flatMap((p) =>
+		(['bn', 'en'] as const).map(
+			(lang) =>
+				`\t<url><loc>${absoluteUrl(localizePath(lang, p.path))}</loc>${
+					p.lastmod ? `<lastmod>${p.lastmod}</lastmod>` : ''
+				}${alternates(p.path)}</url>`
+		)
+	);
+
 	const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-${pages
-	.map(
-		(p) =>
-			`\t<url><loc>${absoluteUrl(p.path)}</loc>${p.lastmod ? `<lastmod>${p.lastmod}</lastmod>` : ''}${Object.entries(
-				p.alternates ?? {}
-			)
-				.map(
-					([lang, href]) =>
-						`<xhtml:link rel="alternate" hreflang="${lang}" href="${absoluteUrl(href)}"/>`
-				)
-				.join('')}</url>`
-	)
-	.join('\n')}
+${urls.join('\n')}
 </urlset>
 `;
 	return new Response(xml, { headers: { 'content-type': 'application/xml' } });

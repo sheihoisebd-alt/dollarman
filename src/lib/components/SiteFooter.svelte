@@ -1,33 +1,33 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
-	import type { Dictionary } from '#lib/i18n.js';
+	import type { Dictionary, Lang } from '#lib/i18n.js';
+	import { href } from '#lib/paths.svelte.js';
 	import { consent } from '#lib/consent.svelte.js';
 	import { TELEGRAM_URL } from '#lib/attribution.svelte.js';
 	import { site } from '#lib/site.js';
 	import Icon from './Icon.svelte';
 
-	let { dict }: { dict: Dictionary } = $props();
+	let { lang, dict }: { lang: Lang; dict: Dictionary } = $props();
 
 	const groups = $derived([
 		{
 			title: dict.footer.learn,
 			links: [
-				{ href: '/course' as const, label: dict.nav.course },
-				{ href: '/tools' as const, label: dict.nav.tools },
-				{ href: '/downloads' as const, label: dict.footer.downloads },
-				{ href: '/blog' as const, label: dict.nav.blog }
+				{ path: '/course', label: dict.nav.course },
+				{ path: '/tools', label: dict.nav.tools },
+				{ path: '/downloads', label: dict.footer.downloads },
+				{ path: '/blog', label: dict.nav.blog }
 			]
 		},
 		{
 			title: dict.footer.company,
-			links: [{ href: '/about' as const, label: dict.nav.about }]
+			links: [{ path: '/about', label: dict.nav.about }]
 		},
 		{
 			title: dict.footer.legal,
 			links: [
-				{ href: '/disclaimer' as const, label: dict.footer.disclaimerLink },
-				{ href: '/privacy' as const, label: dict.footer.privacy },
-				{ href: '/terms' as const, label: dict.footer.terms }
+				{ path: '/disclaimer', label: dict.footer.disclaimerLink },
+				{ path: '/privacy', label: dict.footer.privacy },
+				{ path: '/terms', label: dict.footer.terms }
 			]
 		}
 	]);
@@ -48,9 +48,7 @@
 					/>
 					{site.name}
 				</p>
-				<p class="mt-2 text-sm text-muted">{site.tagline}</p>
-				<!-- External profile links, so resolve() does not apply. -->
-				<!-- eslint-disable svelte/no-navigation-without-resolve -->
+				<p class="mt-2 text-sm text-muted">{dict.footer.tagline}</p>
 				<div class="mt-4 flex gap-2">
 					{#if site.facebookUrl}
 						<a
@@ -73,16 +71,15 @@
 						<Icon name="telegram" />
 					</a>
 				</div>
-				<!-- eslint-enable svelte/no-navigation-without-resolve -->
 			</div>
 			{#each groups as group (group.title)}
 				<div>
 					<h2 class="text-sm font-semibold text-ink">{group.title}</h2>
 					<ul class="mt-2">
-						{#each group.links as link (link.href)}
+						{#each group.links as link (link.path)}
 							<li>
 								<a
-									href={resolve(link.href)}
+									href={href(lang, link.path)}
 									class="inline-flex min-h-10 items-center text-sm text-body hover:text-ink"
 								>
 									{link.label}
@@ -95,9 +92,9 @@
 		</div>
 
 		<p class="mt-10 rounded-xl border border-line bg-surface p-4 text-sm leading-relaxed text-body">
-			<strong class="text-ink">Risk warning:</strong>
+			<strong class="text-ink">{dict.footer.riskWarning}</strong>
 			{dict.footer.disclaimer}
-			<a href={resolve('/disclaimer')} class="font-medium text-silver-200 underline"
+			<a href={href(lang, '/disclaimer')} class="font-medium text-gold-300 underline"
 				>{dict.footer.disclaimerLink}</a
 			>
 		</p>

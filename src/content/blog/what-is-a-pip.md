@@ -27,7 +27,7 @@ For a pair quoted in US dollars, such as EUR/USD, one pip on one standard lot is
 
 Say you buy 0.10 lots (one mini lot) of EUR/USD with a stop-loss 25 pips away. One pip is worth about $1, so if the stop is hit, you lose about **$25** (plus costs such as spread).
 
-Knowing this before you enter is the basis of risk management. Our free [pip value calculator](/tools/pip-value-calculator) does the maths for any pair and lot size.
+Knowing this before you enter is the basis of risk management. Our free [pip value calculator](/en/tools/pip-value-calculator) does the maths for any pair and lot size.
 
 ## Key takeaways
 

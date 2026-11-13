@@ -67,86 +67,131 @@ migrate(db);
 
 db.exec('BEGIN');
 
-const modules = readJson<ModuleJson[]>('course/modules.json');
+// English content lives in src/content, Bangla in src/content/bn, with the same slugs and files.
+const langs = ['en', 'bn'] as const;
+const langDir = (lang: (typeof langs)[number]) => (lang === 'en' ? '' : 'bn');
+
 const insertModule = db.prepare(
-	`INSERT INTO modules (slug, position, title, summary, duration_min, preview, outcomes, lessons, checklist)
-	 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
+	`INSERT INTO modules (lang, slug, position, title, summary, duration_min, preview, outcomes, lessons, checklist)
+	 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 );
-modules.forEach((m, i) => {
-	if (!fs.existsSync(path.join(contentDir, 'course', `${m.slug}.md`))) {
-		throw new Error(`course/modules.json: no Markdown file for "${m.slug}"`);
-	}
-	insertModule.run(
-		m.slug,
-		i + 1,
-		m.title,
-		m.summary,
-		m.durationMin,
-		// Module 1 is always previewable.
-		i === 0 || m.preview ? 1 : 0,
-		JSON.stringify(m.outcomes),
-		JSON.stringify(m.lessons),
-		JSON.stringify(m.checklist)
-	);
-});
-
-const quizzes = readJson<QuizJson>('course/quizzes.json');
 const insertQuestion = db.prepare(
-	`INSERT INTO quiz_questions (module_slug, position, question, options, answer_index, explanation)
-	 VALUES (?, ?, ?, ?, ?, ?)`
+	`INSERT INTO quiz_questions (lang, module_slug, position, question, options, answer_index, explanation)
+	 VALUES (?, ?, ?, ?, ?, ?, ?)`
 );
-for (const [slug, questions] of Object.entries(quizzes)) {
-	questions.forEach((q, i) => {
-		if (q.answer < 0 || q.answer >= q.options.length)
-			throw new Error(`quiz ${slug}#${i}: bad answer`);
-		insertQuestion.run(slug, i + 1, q.question, JSON.stringify(q.options), q.answer, q.explanation);
-	});
-}
-
 const insertTool = db.prepare(
-	`INSERT INTO tools (slug, position, kind, title, description, href, file_format) VALUES (?, ?, ?, ?, ?, ?, ?)`
+	`INSERT INTO tools (lang, slug, position, kind, title, description, href, file_format)
+	 VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
 );
-readJson<ToolJson[]>('tools.json').forEach((t, i) =>
-	insertTool.run(t.slug, i + 1, t.kind, t.title, t.description, t.href, t.fileFormat ?? null)
+const insertTag = db.prepare(`INSERT INTO tags (lang, slug, name) VALUES (?, ?, ?)`);
+const insertPost = db.prepare(
+	`INSERT INTO posts (lang, slug, title, description, published, updated, reading_min)
+	 VALUES (?, ?, ?, ?, ?, ?, ?)`
 );
+const insertPostTag = db.prepare(
+	`INSERT INTO post_tags (lang, post_slug, tag_slug) VALUES (?, ?, ?)`
+);
+
+const counts: Record<string, { modules: number; posts: number }> = {};
+let enModuleSlugs: string[] = [];
+
+for (const lang of langs) {
+	const dir = langDir(lang);
+	const file = (name: string) => path.join(dir, name);
+
+	const modules = readJson<ModuleJson[]>(file('course/modules.json'));
+	const slugs = modules.map((m) => m.slug);
+	if (lang === 'en') enModuleSlugs = slugs;
+	else if (slugs.join() !== enModuleSlugs.join())
+		throw new Error(
+			`${file('course/modules.json')}: modules must match the English list, in order`
+		);
+
+	modules.forEach((m, i) => {
+		if (!fs.existsSync(path.join(contentDir, dir, 'course', `${m.slug}.md`))) {
+			throw new Error(`${file('course/modules.json')}: no Markdown file for "${m.slug}"`);
+		}
+		insertModule.run(
+			lang,
+			m.slug,
+			i + 1,
+			m.title,
+			m.summary,
+			m.durationMin,
+			// Module 1 is always previewable.
+			i === 0 || m.preview ? 1 : 0,
+			JSON.stringify(m.outcomes),
+			JSON.stringify(m.lessons),
+			JSON.stringify(m.checklist)
+		);
+	});
+
+	const quizzes = readJson<QuizJson>(file('course/quizzes.json'));
+	for (const [slug, questions] of Object.entries(quizzes)) {
+		questions.forEach((q, i) => {
+			if (q.answer < 0 || q.answer >= q.options.length)
+				throw new Error(`${lang} quiz ${slug}#${i}: bad answer`);
+			insertQuestion.run(
+				lang,
+				slug,
+				i + 1,
+				q.question,
+				JSON.stringify(q.options),
+				q.answer,
+				q.explanation
+			);
+		});
+	}
+
+	readJson<ToolJson[]>(file('tools.json')).forEach((t, i) =>
+		insertTool.run(
+			lang,
+			t.slug,
+			i + 1,
+			t.kind,
+			t.title,
+			t.description,
+			t.href,
+			t.fileFormat ?? null
+		)
+	);
+
+	const tagNames = readJson<Record<string, string>>(file('blog/tags.json'));
+	for (const [slug, name] of Object.entries(tagNames)) insertTag.run(lang, slug, name);
+
+	const blogDir = path.join(contentDir, dir, 'blog');
+	let postCount = 0;
+	for (const name of fs.readdirSync(blogDir).filter((f) => f.endsWith('.md'))) {
+		const slug = name.replace(/\.md$/, '');
+		const label = file(`blog/${name}`);
+		const { data, body } = frontmatter(fs.readFileSync(path.join(blogDir, name), 'utf8'));
+		if (data.draft === 'true') continue;
+		const words = body.split(/\s+/).filter(Boolean).length;
+		insertPost.run(
+			lang,
+			slug,
+			required(data, 'title', label),
+			required(data, 'description', label),
+			required(data, 'published', label),
+			typeof data.updated === 'string' ? data.updated : null,
+			Math.max(1, Math.round(words / 200))
+		);
+		for (const tag of Array.isArray(data.tags) ? data.tags : []) {
+			if (!(tag in tagNames))
+				throw new Error(`${label}: unknown tag "${tag}" (add it to ${file('blog/tags.json')})`);
+			insertPostTag.run(lang, slug, tag);
+		}
+		postCount++;
+	}
+	counts[lang] = { modules: modules.length, posts: postCount };
+}
 
 const faqs = readJson<FaqJson>('faq.json');
 const insertFaq = db.prepare(
 	`INSERT INTO faqs (lang, position, question, answer) VALUES (?, ?, ?, ?)`
 );
-for (const lang of ['en', 'bn'] as const) {
+for (const lang of langs) {
 	faqs[lang].forEach((f, i) => insertFaq.run(lang, i + 1, f.q, f.a));
-}
-
-const tagNames = readJson<Record<string, string>>('blog/tags.json');
-const insertTag = db.prepare(`INSERT INTO tags (slug, name) VALUES (?, ?)`);
-for (const [slug, name] of Object.entries(tagNames)) insertTag.run(slug, name);
-
-const insertPost = db.prepare(
-	`INSERT INTO posts (slug, title, description, published, updated, reading_min) VALUES (?, ?, ?, ?, ?, ?)`
-);
-const insertPostTag = db.prepare(`INSERT INTO post_tags (post_slug, tag_slug) VALUES (?, ?)`);
-const blogDir = path.join(contentDir, 'blog');
-let postCount = 0;
-for (const file of fs.readdirSync(blogDir).filter((f) => f.endsWith('.md'))) {
-	const slug = file.replace(/\.md$/, '');
-	const { data, body } = frontmatter(fs.readFileSync(path.join(blogDir, file), 'utf8'));
-	if (data.draft === 'true') continue;
-	const words = body.split(/\s+/).filter(Boolean).length;
-	insertPost.run(
-		slug,
-		required(data, 'title', file),
-		required(data, 'description', file),
-		required(data, 'published', file),
-		typeof data.updated === 'string' ? data.updated : null,
-		Math.max(1, Math.round(words / 200))
-	);
-	for (const tag of Array.isArray(data.tags) ? data.tags : []) {
-		if (!(tag in tagNames))
-			throw new Error(`${file}: unknown tag "${tag}" (add it to blog/tags.json)`);
-		insertPostTag.run(slug, tag);
-	}
-	postCount++;
 }
 
 db.exec('COMMIT');
@@ -168,6 +213,7 @@ db.exec('VACUUM');
 db.close();
 
 console.log(
-	`Built ${path.relative(root, dbPath)}: ${modules.length} modules, ${postCount} posts, ` +
-		`${faqs.en.length}+${faqs.bn.length} FAQs`
+	`Built ${path.relative(root, dbPath)}: ` +
+		langs.map((l) => `${l} ${counts[l].modules} modules, ${counts[l].posts} posts`).join('; ') +
+		`; ${faqs.en.length}+${faqs.bn.length} FAQs`
 );

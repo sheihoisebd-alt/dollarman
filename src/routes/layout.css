@@ -1,21 +1,22 @@
 @import 'tailwindcss';
 
 /*
- * Dark theme taken from the logo: near-black surfaces, brushed-silver accent, a touch of gold.
+ * Dark theme taken from the logo: near-black surfaces lit by the bright gold of the "D",
+ * running from yellow into orange. Silver stays as a quiet secondary tone.
  * Components use these semantic tokens, never raw palette colours, so the print rules at the
  * bottom can swap the whole site to black on white. All text pairs meet WCAG AA.
  */
 @theme {
-	--color-page: #09090b;
-	--color-surface: #141417;
-	--color-surface-2: #0f0f12;
-	--color-raised: #1d1d22;
-	--color-line: #2a2a31;
-	--color-line-strong: #44444d;
+	--color-page: #0b0b0c;
+	--color-surface: #161618;
+	--color-surface-2: #111113;
+	--color-raised: #202024;
+	--color-line: #2c2c31;
+	--color-line-strong: #4a4a52;
 
-	--color-ink: #f5f6f8;
-	--color-body: #c9ccd3;
-	--color-muted: #9da1ab;
+	--color-ink: #ffffff;
+	--color-body: #d6d7dc;
+	--color-muted: #a3a5ad;
 
 	--color-silver-100: #f1f2f5;
 	--color-silver-200: #dadde3;
@@ -23,9 +24,16 @@
 	--color-silver-400: #9ba1ab;
 	--color-silver-500: #737985;
 
-	--color-gold-300: #f3d27a;
-	--color-gold-400: #e0b046;
-	--color-gold-500: #c18f25;
+	--color-gold-200: #ffe68a;
+	--color-gold-300: #ffd23f;
+	--color-gold-400: #ffbf1a;
+	--color-gold-500: #f59e0b;
+	--color-gold-600: #ea7a0c;
+
+	/* Telegram brand blue, for the Telegram buttons only */
+	--color-telegram: #2aabee;
+	--color-telegram-light: #5ccbff;
+	--color-telegram-dark: #1479b8;
 
 	--font-sans:
 		system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', 'Noto Sans Bengali', 'Hind Siliguri',
@@ -39,13 +47,20 @@
 	}
 	html {
 		color-scheme: dark;
+		/* Height of the floating header, padding included (see SiteHeader) */
+		--header-h: 4.25rem;
+	}
+	@media (min-width: 640px) {
+		html {
+			--header-h: 4.75rem;
+		}
 	}
 	body {
 		@apply bg-page text-body antialiased;
 		overflow-x: hidden;
 	}
 	:focus-visible {
-		@apply outline-2 outline-offset-2 outline-silver-300;
+		@apply outline-2 outline-offset-2 outline-gold-300;
 	}
 	@media (prefers-reduced-motion: reduce) {
 		*,
@@ -63,51 +78,160 @@
 		@apply mx-auto w-full max-w-6xl px-4 sm:px-6;
 	}
 
-	/* Brushed-silver fill, like the "M" in the logo. Dark text on it is 12:1. */
-	.btn-metal {
-		color: var(--color-page);
+	/* Primary button: bright gold running into orange, like the "D" in the logo. Dark text is 11:1. */
+	.btn-gold {
+		color: #111111;
 		background: linear-gradient(
-			180deg,
-			var(--color-silver-100) 0%,
-			var(--color-silver-300) 55%,
-			var(--color-silver-400) 100%
+			135deg,
+			var(--color-gold-200) 0%,
+			var(--color-gold-400) 45%,
+			var(--color-gold-500) 100%
 		);
 		box-shadow:
-			inset 0 1px 0 rgb(255 255 255 / 0.7),
+			inset 0 1px 0 rgb(255 255 255 / 0.55),
 			0 1px 2px rgb(0 0 0 / 0.6),
-			0 8px 24px -8px rgb(191 196 204 / 0.35);
-		transition: filter 150ms;
+			0 12px 34px -6px rgb(255 176 20 / 0.7);
+		transition:
+			filter 150ms,
+			box-shadow 150ms;
 	}
-	.btn-metal:hover {
-		filter: brightness(1.08);
+	.btn-gold:hover {
+		filter: brightness(1.07) saturate(1.1);
+		box-shadow:
+			inset 0 1px 0 rgb(255 255 255 / 0.55),
+			0 1px 2px rgb(0 0 0 / 0.6),
+			0 16px 44px -6px rgb(255 176 20 / 0.9);
 	}
 
-	/* Silver gradient text for headline highlights */
-	.text-metal {
+	/* Telegram buttons: the app's own blue with a glow. The gradient darkens toward the label so
+	   white text stays readable (about 4:1 behind the text, 4.7:1 at the dark end). */
+	.btn-telegram {
+		color: #ffffff;
 		background: linear-gradient(
-			180deg,
-			var(--color-silver-100) 10%,
-			var(--color-silver-300) 60%,
-			var(--color-silver-500) 100%
+			135deg,
+			var(--color-telegram-light) 0%,
+			var(--color-telegram) 25%,
+			var(--color-telegram-dark) 75%
+		);
+		text-shadow: 0 1px 1px rgb(0 0 0 / 0.25);
+		box-shadow:
+			inset 0 1px 0 rgb(255 255 255 / 0.4),
+			0 1px 2px rgb(0 0 0 / 0.5),
+			0 0 0 1px rgb(92 203 255 / 0.35),
+			0 10px 34px -6px rgb(42 171 238 / 0.75);
+		transition:
+			filter 150ms,
+			box-shadow 150ms,
+			transform 150ms;
+	}
+	.btn-telegram:hover {
+		filter: brightness(1.08) saturate(1.1);
+		transform: translateY(-1px);
+		box-shadow:
+			inset 0 1px 0 rgb(255 255 255 / 0.4),
+			0 1px 2px rgb(0 0 0 / 0.5),
+			0 0 0 1px rgb(92 203 255 / 0.5),
+			0 14px 44px -6px rgb(42 171 238 / 0.95);
+	}
+
+	/* Brand buttons for the "connect with us" cards, each in its platform's colours with a glow.
+	   Gradients darken under the label so the white text stays readable. */
+	.btn-youtube,
+	.btn-facebook,
+	.btn-instagram,
+	.btn-tiktok {
+		color: #ffffff;
+		text-shadow: 0 1px 1px rgb(0 0 0 / 0.25);
+		transition:
+			filter 150ms,
+			box-shadow 150ms,
+			transform 150ms;
+	}
+	.btn-youtube:hover,
+	.btn-facebook:hover,
+	.btn-instagram:hover,
+	.btn-tiktok:hover {
+		filter: brightness(1.08) saturate(1.1);
+		transform: translateY(-1px);
+	}
+	.btn-youtube {
+		background: linear-gradient(135deg, #ff4e45 0%, #e00000 45%, #b80000 100%);
+		box-shadow:
+			inset 0 1px 0 rgb(255 255 255 / 0.3),
+			0 0 0 1px rgb(255 78 69 / 0.35),
+			0 10px 30px -8px rgb(255 0 0 / 0.65);
+	}
+	.btn-facebook {
+		background: linear-gradient(135deg, #4a9bff 0%, #1877f2 35%, #0b5ed7 100%);
+		box-shadow:
+			inset 0 1px 0 rgb(255 255 255 / 0.3),
+			0 0 0 1px rgb(74 155 255 / 0.35),
+			0 10px 30px -8px rgb(24 119 242 / 0.7);
+	}
+	.btn-instagram {
+		background: linear-gradient(120deg, #f58529 0%, #dd2a7b 45%, #8134af 80%, #515bd4 100%);
+		box-shadow:
+			inset 0 1px 0 rgb(255 255 255 / 0.3),
+			0 0 0 1px rgb(221 42 123 / 0.4),
+			0 10px 30px -8px rgb(221 42 123 / 0.65);
+	}
+	/* TikTok: black with its cyan and pink edges */
+	.btn-tiktok {
+		background: linear-gradient(180deg, #1c1c1c, #000000);
+		box-shadow:
+			-2px -2px 0 0 #25f4ee,
+			2px 2px 0 0 #fe2c55,
+			0 10px 30px -8px rgb(254 44 85 / 0.5);
+	}
+
+	/* Gold gradient text for headline highlights */
+	.text-gold {
+		background: linear-gradient(
+			100deg,
+			var(--color-gold-200) 0%,
+			var(--color-gold-400) 45%,
+			var(--color-gold-600) 100%
 		);
 		-webkit-background-clip: text;
 		background-clip: text;
 		color: transparent;
 	}
 
-	/* Call-to-action blocks: raised dark panel with a silver edge and a soft top glow */
+	/* Call-to-action blocks: raised dark panel with a gold edge and a warm top glow */
 	.panel-cta {
-		@apply border border-line-strong text-ink;
+		@apply border border-gold-400/35 text-ink;
 		background:
-			radial-gradient(120% 80% at 50% 0%, rgb(191 196 204 / 0.14), transparent 60%),
+			radial-gradient(120% 80% at 50% 0%, rgb(255 191 26 / 0.26), transparent 60%),
+			radial-gradient(80% 60% at 50% 100%, rgb(42 171 238 / 0.12), transparent 70%),
 			var(--color-surface);
 	}
 
-	/* Section backdrop with the same glow, used behind page heroes */
+	/* Section backdrop with the same glow, used behind page heroes. It must be the page's first
+	   section: it slides up under the floating header so the glow runs behind the bar. */
 	.hero-glow {
+		margin-top: calc(-1 * var(--header-h));
+		padding-top: var(--header-h);
 		background:
-			radial-gradient(60% 70% at 75% 10%, rgb(191 196 204 / 0.12), transparent 70%),
-			radial-gradient(40% 50% at 10% 0%, rgb(224 176 70 / 0.08), transparent 70%), var(--color-page);
+			radial-gradient(60% 70% at 75% 10%, rgb(255 191 26 / 0.24), transparent 70%),
+			radial-gradient(45% 55% at 10% 0%, rgb(245 120 11 / 0.2), transparent 70%),
+			radial-gradient(50% 50% at 30% 85%, rgb(42 171 238 / 0.14), transparent 70%),
+			var(--color-page);
+	}
+
+	/* Glow at the top of every page, so the floating header never sits on flat black */
+	.top-glow {
+		background:
+			radial-gradient(55% 80% at 78% 0%, rgb(255 191 26 / 0.18), transparent 70%),
+			radial-gradient(45% 70% at 8% 0%, rgb(245 120 11 / 0.14), transparent 70%),
+			radial-gradient(40% 60% at 40% 100%, rgb(42 171 238 / 0.08), transparent 70%);
+		mask-image: linear-gradient(#000 40%, transparent);
+	}
+
+	/* Dotted band behind the home showcase, fading out at the edges like a stage */
+	.dot-band {
+		background-image: radial-gradient(rgb(255 255 255 / 0.13) 1px, transparent 1.3px);
+		background-size: 12px 12px;
+		mask-image: radial-gradient(80% 70% at 50% 40%, #000 30%, transparent 75%);
 	}
 
 	/* Long-form content rendered from Markdown */
@@ -124,7 +248,7 @@
 		@apply mt-8 text-xl font-semibold text-ink;
 	}
 	.prose a:not([data-cta]) {
-		@apply font-medium text-silver-200 underline underline-offset-2 hover:text-ink;
+		@apply font-medium text-gold-300 underline underline-offset-2 hover:text-gold-200;
 	}
 	.prose strong {
 		@apply font-semibold text-ink;
@@ -155,7 +279,7 @@
 		@apply mb-1.5 block text-sm font-medium text-ink;
 	}
 	.field-input {
-		@apply block min-h-12 w-full rounded-xl border border-line-strong bg-surface-2 px-4 text-base text-ink shadow-sm focus:border-silver-300 focus:ring-2 focus:ring-silver-500/40 focus:outline-none;
+		@apply block min-h-12 w-full rounded-xl border border-line-strong bg-surface-2 px-4 text-base text-ink shadow-sm focus:border-gold-400 focus:ring-2 focus:ring-gold-400/40 focus:outline-none;
 	}
 }
 
@@ -177,13 +301,16 @@
 		--color-silver-300: #333;
 		--color-silver-400: #555;
 		--color-silver-500: #666;
+		--color-gold-200: #6b4d06;
 		--color-gold-300: #6b4d06;
 		--color-gold-400: #8a640c;
+		--color-gold-500: #8a640c;
+		--color-gold-600: #8a640c;
+		--color-telegram: #222;
+		--color-telegram-light: #222;
+		--color-telegram-dark: #222;
 	}
 	.no-print {
 		display: none !important;
-	}
-	body {
-		padding-bottom: 0 !important;
 	}
 }

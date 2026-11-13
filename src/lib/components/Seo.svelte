@@ -1,16 +1,16 @@
 <script lang="ts">
+	import { page } from '$app/state';
+	import { langFromPath, localizePath } from '#lib/i18n.js';
 	import { absoluteUrl, site } from '#lib/site.js';
 
 	type Props = {
 		title: string;
 		description: string;
-		/** Path of this page, used for the canonical URL. */
+		/** Language-neutral path of this page ("/course"); English gets the /en prefix. */
 		path: string;
 		type?: 'website' | 'article';
 		jsonLd?: Record<string, unknown>[];
 		noindex?: boolean;
-		/** hreflang alternates, e.g. { en: '/', bn: '/bn' } */
-		alternates?: Record<string, string>;
 		/** ISO dates for articles. */
 		published?: string;
 		modified?: string;
@@ -23,15 +23,17 @@
 		type = 'website',
 		jsonLd = [],
 		noindex = false,
-		alternates,
 		published,
 		modified
 	}: Props = $props();
 
-	const locale = $derived(path === '/bn' || path.startsWith('/bn/') ? 'bn_BD' : 'en_US');
+	// Every page exists in Bangla (default, at the root) and English (under /en).
+	const lang = $derived(langFromPath(page.url.pathname));
+	const locale = $derived(lang === 'bn' ? 'bn_BD' : 'en_US');
+	const alternates = $derived({ bn: localizePath('bn', path), en: localizePath('en', path) });
 
 	const fullTitle = $derived(title === site.name ? title : `${title} | ${site.name}`);
-	const canonical = $derived(absoluteUrl(path));
+	const canonical = $derived(absoluteUrl(localizePath(lang, path)));
 	// Escape "<" so content can never close the script tag early.
 	const scripts = $derived(
 		jsonLd.map(
@@ -50,23 +52,16 @@
 		name="robots"
 		content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'}
 	/>
-	{#if alternates}
-		{#each Object.entries(alternates) as [hreflang, href] (hreflang)}
-			<link rel="alternate" {hreflang} href={absoluteUrl(href)} />
-		{/each}
-		<link rel="alternate" hreflang="x-default" href={absoluteUrl(alternates.en ?? path)} />
-	{/if}
+	<link rel="alternate" hreflang="bn" href={absoluteUrl(alternates.bn)} />
+	<link rel="alternate" hreflang="en" href={absoluteUrl(alternates.en)} />
+	<link rel="alternate" hreflang="x-default" href={absoluteUrl(alternates.bn)} />
 	<meta property="og:site_name" content={site.name} />
 	<meta property="og:type" content={type} />
 	<meta property="og:title" content={fullTitle} />
 	<meta property="og:description" content={description} />
 	<meta property="og:url" content={canonical} />
 	<meta property="og:locale" content={locale} />
-	{#if alternates}
-		{#each Object.keys(alternates).filter((l) => !locale.startsWith(l)) as alt (alt)}
-			<meta property="og:locale:alternate" content={alt === 'bn' ? 'bn_BD' : 'en_US'} />
-		{/each}
-	{/if}
+	<meta property="og:locale:alternate" content={lang === 'bn' ? 'en_US' : 'bn_BD'} />
 	{#if type === 'article' && published}
 		<meta property="article:published_time" content={published} />
 		<meta property="article:modified_time" content={modified ?? published} />

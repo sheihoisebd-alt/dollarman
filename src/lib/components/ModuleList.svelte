@@ -1,23 +1,19 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
-	import type { Module } from '#lib/types.js';
+	import type { Lang, Module } from '#lib/types.js';
+	import { num, t } from '#lib/i18n.js';
+	import { href } from '#lib/paths.svelte.js';
 	import { progress } from '#lib/progress.svelte.js';
 	import Icon from './Icon.svelte';
 
 	type Props = {
+		lang: Lang;
 		modules: Module[];
-		minutesLabel?: string;
-		previewLabel?: string;
 		/** Show per-module completion from this browser's saved progress. */
 		showProgress?: boolean;
 	};
 
-	let {
-		modules,
-		minutesLabel = 'min',
-		previewLabel = 'Free preview',
-		showProgress = false
-	}: Props = $props();
+	let { lang, modules, showProgress = false }: Props = $props();
+	const c = $derived(t(lang).common);
 </script>
 
 <ol class="grid gap-3 sm:grid-cols-2">
@@ -25,31 +21,33 @@
 		{@const complete = showProgress && progress.isComplete(m.slug, m.checklist.length)}
 		<li>
 			<a
-				href={resolve('/course/[slug]', { slug: m.slug })}
-				class="flex h-full gap-4 rounded-2xl border border-line bg-surface p-4 transition hover:border-silver-400 hover:shadow-md sm:p-5"
+				href={href(lang, `/course/${m.slug}`)}
+				class="flex h-full gap-4 rounded-2xl border border-line bg-surface p-4 transition hover:border-gold-400/60 hover:shadow-md sm:p-5"
 			>
 				<span
 					class={[
 						'flex size-10 shrink-0 items-center justify-center rounded-full text-sm font-bold',
-						complete ? 'bg-emerald-500 text-page' : 'bg-raised text-silver-200'
+						complete
+							? 'bg-emerald-500 text-page'
+							: 'bg-gold-400/12 text-gold-300 ring-1 ring-gold-400/25'
 					]}
 				>
 					{#if complete}
-						<Icon name="check" class="size-5" /><span class="sr-only">Completed:</span>
+						<Icon name="check" class="size-5" /><span class="sr-only">{c.completed}</span>
 					{:else}
-						{m.position}
+						{num(lang, m.position)}
 					{/if}
 				</span>
 				<span class="min-w-0">
 					<span class="block font-semibold text-ink">{m.title}</span>
 					<span class="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted">
 						<span class="inline-flex items-center gap-1"
-							><Icon name="clock" class="size-4" />{m.durationMin} {minutesLabel}</span
+							><Icon name="clock" class="size-4" />{num(lang, m.durationMin)} {c.min}</span
 						>
 						{#if m.preview}
 							<span
 								class="rounded-full bg-emerald-400/15 px-2 py-0.5 text-xs font-semibold text-emerald-300"
-								>{previewLabel}</span
+								>{c.freePreview}</span
 							>
 						{:else}
 							<span class="inline-flex items-center gap-1"

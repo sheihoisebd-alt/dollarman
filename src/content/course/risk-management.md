@@ -6,7 +6,7 @@
 - **Position sizing.** Turning your risk amount and stop distance into a lot size.
 - **Risk/reward.** Comparing what you risk to what you aim to gain, and the break-even win rate.
 
-Practise with the free [position-size](/tools/position-size-calculator), [risk/reward](/tools/risk-reward-calculator) and [pip value](/tools/pip-value-calculator) calculators.
+Practise with the free [position-size](/en/tools/position-size-calculator), [risk/reward](/en/tools/risk-reward-calculator) and [pip value](/en/tools/pip-value-calculator) calculators.
 
 ## Practice task
 

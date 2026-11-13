@@ -1,0 +1,39 @@
+[
+	{
+		"slug": "position-size-calculator",
+		"kind": "calculator",
+		"title": "পজিশন সাইজ ক্যালকুলেটর",
+		"description": "আপনার অ্যাকাউন্ট, রিস্কের শতাংশ আর স্টপ-লসের দূরত্ব অনুযায়ী সঠিক লট সাইজ বের করুন।",
+		"href": "/tools/position-size-calculator"
+	},
+	{
+		"slug": "risk-reward-calculator",
+		"kind": "calculator",
+		"title": "রিস্ক/রিওয়ার্ড ক্যালকুলেটর",
+		"description": "স্টপ-লস আর টার্গেট পাশাপাশি রেখে দেখুন, সমান-সমান থাকতে কত ভাগ ট্রেড জিততে হবে।",
+		"href": "/tools/risk-reward-calculator"
+	},
+	{
+		"slug": "pip-value-calculator",
+		"kind": "calculator",
+		"title": "পিপ ভ্যালু ক্যালকুলেটর",
+		"description": "যেকোনো লট সাইজে এক পিপের দাম কত মার্কিন ডলার, দেখে নিন।",
+		"href": "/tools/pip-value-calculator"
+	},
+	{
+		"slug": "trading-journal",
+		"kind": "download",
+		"title": "ট্রেডিং জার্নাল টেমপ্লেট",
+		"description": "Excel বা Google Sheets-এর জন্য তৈরি একটা জার্নাল। প্রতিটা ট্রেড লিখে রাখুন, নিজের উন্নতি দেখুন।",
+		"href": "/downloads/trading-journal.csv",
+		"fileFormat": "CSV (Excel / Google Sheets)"
+	},
+	{
+		"slug": "cheat-sheet",
+		"kind": "download",
+		"title": "নতুনদের চিট-শিট",
+		"description": "জরুরি শব্দ, অর্ডারের ধরন, ক্যান্ডেলের গঠন আর ট্রেডের আগের চেকলিস্ট, এক পাতায়, প্রিন্ট করার মতো করে।",
+		"href": "/downloads/cheat-sheet",
+		"fileFormat": "প্রিন্ট করার পেজ (PDF হিসেবে সেভ করা যায়)"
+	}
+]

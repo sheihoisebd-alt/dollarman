@@ -78,15 +78,20 @@ export type RiskReward = {
 	breakEvenWinRate: number;
 };
 
+/** Why a risk/reward input cannot be calculated; the page shows the message in its language. */
+export type RiskRewardError = 'missing' | 'same-as-entry' | 'buy-target' | 'sell-target';
+
 /** Direction is inferred: a stop below entry means a long (buy) trade. */
-export function riskReward(entry: number, stop: number, target: number): RiskReward | string {
-	if (!valid(entry, stop, target)) return 'Enter an entry, stop-loss and target price.';
-	if (stop === entry) return 'The stop-loss cannot be the same as the entry price.';
+export function riskReward(
+	entry: number,
+	stop: number,
+	target: number
+): RiskReward | RiskRewardError {
+	if (!valid(entry, stop, target)) return 'missing';
+	if (stop === entry) return 'same-as-entry';
 	const direction = stop < entry ? 'long' : 'short';
-	if (direction === 'long' && target <= entry)
-		return 'For a buy (stop below entry), the target must be above the entry price.';
-	if (direction === 'short' && target >= entry)
-		return 'For a sell (stop above entry), the target must be below the entry price.';
+	if (direction === 'long' && target <= entry) return 'buy-target';
+	if (direction === 'short' && target >= entry) return 'sell-target';
 	const risk = Math.abs(entry - stop);
 	const reward = Math.abs(target - entry);
 	const ratio = reward / risk;

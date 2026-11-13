@@ -28,7 +28,7 @@ Small risk keeps you in the game long enough to learn.
 2. **Place your stop-loss** where your trade idea is proven wrong on the chart.
 3. **Size your position** so that hitting the stop costs only your risk amount.
 
-Step 3 is where most people guess. Use our free [position size calculator](/tools/position-size-calculator) instead.
+Step 3 is where most people guess. Use our free [position size calculator](/en/tools/position-size-calculator) instead.
 
 ## A note on expectations
 
