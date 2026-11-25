@@ -116,7 +116,6 @@ const en = {
 			facebook: 'Follow us on Facebook',
 			youtube: 'Subscribe to our official channel',
 			tiktok: 'Short lessons and tips',
-			instagram: 'Reels, tips and updates',
 			email: 'Questions? Write to us',
 			join: 'Join',
 			follow: 'Follow',
@@ -196,6 +195,16 @@ const en = {
 			play: 'Play the intro video',
 			soon: 'Intro video coming soon',
 			photoAlt: 'Dollar Man teaching a class'
+		},
+		youtube: {
+			eyebrow: 'Official YouTube channel',
+			title: 'Latest videos from Dollar Man',
+			intro: 'Free lessons, chart breakdowns and live trading sessions. Watch them right here.',
+			subscribe: 'Subscribe',
+			play: 'Play video',
+			nowPlaying: 'Now playing',
+			views: 'views',
+			listLabel: 'More videos'
 		},
 		instructorBadge: '7+ years of experience',
 		markets: ['Forex', 'Gold', 'Crypto', 'Stocks'],
@@ -309,7 +318,6 @@ const bn: Dictionary = {
 			facebook: 'ফেসবুকে আমাদের ফলো করুন',
 			youtube: 'আমাদের অফিসিয়াল চ্যানেলটা সাবস্ক্রাইব করে রাখুন',
 			tiktok: 'ছোট ছোট লেসন আর কাজের টিপস',
-			instagram: 'রিলস, টিপস আর আপডেট',
 			email: 'কিছু জানার আছে? আমাদের লিখুন',
 			join: 'যোগ দিন',
 			follow: 'ফলো করুন',
@@ -389,6 +397,16 @@ const bn: Dictionary = {
 			play: 'ইন্ট্রো ভিডিও চালান',
 			soon: 'ইন্ট্রো ভিডিও শীঘ্রই আসছে',
 			photoAlt: 'ক্লাস নিচ্ছেন ডলার ম্যান'
+		},
+		youtube: {
+			eyebrow: 'অফিসিয়াল ইউটিউব চ্যানেল',
+			title: 'ডলার ম্যানের নতুন ভিডিওগুলো',
+			intro: 'ফ্রি লেসন, চার্ট বিশ্লেষণ আর লাইভ ট্রেডিং সেশন। এখানেই দেখে নিন।',
+			subscribe: 'সাবস্ক্রাইব করুন',
+			play: 'ভিডিও চালান',
+			nowPlaying: 'চলছে',
+			views: 'বার দেখা হয়েছে',
+			listLabel: 'আরও ভিডিও'
 		},
 		instructorBadge: '৭+ বছরের অভিজ্ঞতা',
 		markets: ['ফরেক্স', 'গোল্ড', 'ক্রিপ্টো', 'স্টক'],

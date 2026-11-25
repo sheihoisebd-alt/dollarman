@@ -20,8 +20,8 @@ export type Attribution = Partial<Record<Key, string>> & { landing?: string };
 
 const STORAGE_KEY = 'dml-attribution';
 
-// PLACEHOLDER: set PUBLIC_TELEGRAM_CHANNEL in .env (channel username without @).
-export const TELEGRAM_CHANNEL = PUBLIC_TELEGRAM_CHANNEL ?? 'YOUR_CHANNEL';
+// PUBLIC_TELEGRAM_CHANNEL (channel username without @) overrides the default channel.
+export const TELEGRAM_CHANNEL = PUBLIC_TELEGRAM_CHANNEL ?? 'trading_with_dollar_man';
 
 /**
  * Public channel link. Channels ignore `?start=` payloads (only bots read them), so ad attribution

@@ -5,4 +5,4 @@
 	let { data }: PageProps = $props();
 </script>
 
-<HomePage lang={data.lang} modules={data.modules} faqs={data.faqs} />
+<HomePage lang={data.lang} modules={data.modules} faqs={data.faqs} videos={data.videos} />

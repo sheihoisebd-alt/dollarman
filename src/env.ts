@@ -15,7 +15,7 @@ export const variables = defineEnvVars({
 		public: true,
 		static: true,
 		description:
-			'Telegram channel username, e.g. dollarman4178. "@dollarman4178" and "https://t.me/dollarman4178" also work.',
+			'Telegram channel username, e.g. trading_with_dollar_man. "@trading_with_dollar_man" and "https://t.me/trading_with_dollar_man" also work.',
 		schema: (value) =>
 			optional(
 				value

@@ -95,7 +95,7 @@
 					alt={s.photoAlt}
 					width="800"
 					height="1000"
-					class="absolute inset-y-0 right-0 h-full w-[68%] object-cover object-[50%_15%] sm:w-[62%]"
+					class="absolute inset-y-0 right-0 h-full w-[68%] object-cover object-[50%_60%] sm:w-[62%]"
 				/>
 				<div
 					class="absolute inset-0 bg-linear-to-r from-surface from-30% via-surface/80 via-45% to-transparent to-75% sm:from-40% sm:via-50%"

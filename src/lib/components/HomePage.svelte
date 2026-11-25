@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Faq, Lang, Module } from '#lib/types.js';
+	import type { Faq, Lang, Module, YoutubeVideo } from '#lib/types.js';
 	import { t } from '#lib/i18n.js';
 	import { href } from '#lib/paths.svelte.js';
 	import { popChildren, reveal, revealChildren, smoothDetails, tilt } from '#lib/motion.js';
@@ -14,8 +14,14 @@
 	import StatsBand from './StatsBand.svelte';
 	import TelegramButton from './TelegramButton.svelte';
 	import VideoSection from './VideoSection.svelte';
+	import YoutubeSection from './YoutubeSection.svelte';
 
-	let { lang, modules, faqs }: { lang: Lang; modules: Module[]; faqs: Faq[] } = $props();
+	let {
+		lang,
+		modules,
+		faqs,
+		videos
+	}: { lang: Lang; modules: Module[]; faqs: Faq[]; videos: YoutubeVideo[] } = $props();
 
 	const d = $derived(t(lang).home);
 	const cta = $derived(t(lang).cta);
@@ -56,7 +62,7 @@
 				name: t('en').home.instructor.name,
 				jobTitle: 'Founder and lead instructor',
 				description: t('en').home.instructor.bio[0],
-				image: absoluteUrl('/instructor.jpg'),
+				image: absoluteUrl('/showcase/instructor-towers-smile.jpg'),
 				worksFor: { '@id': `${site.url}/#organization` }
 			},
 			provider: { '@type': 'Organization', '@id': `${site.url}/#organization`, name: site.name },
@@ -223,13 +229,13 @@
 			>
 				<div class="relative aspect-4/5 overflow-hidden">
 					<img
-						src="/instructor.jpg"
+						src="/showcase/instructor-mountains.jpg"
 						alt={d.instructor.photoAlt}
 						width="800"
 						height="1000"
 						loading="lazy"
 						decoding="async"
-						class="size-full object-cover object-[50%_25%] contrast-110 saturate-[0.85]"
+						class="size-full object-cover object-[50%_40%] contrast-110 saturate-[0.85]"
 					/>
 					<!-- Night-city mood: darker sky, warm rim light, fade into the name bar -->
 					<div
@@ -288,6 +294,9 @@
 		</div>
 	</div>
 </section>
+
+<!-- Latest videos from the official YouTube channel -->
+<YoutubeSection {lang} {videos} />
 
 <!-- What's included -->
 <section class="container-page py-14 sm:py-20" aria-labelledby="included">

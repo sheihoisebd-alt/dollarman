@@ -64,15 +64,6 @@
 			btn: 'btn-tiktok'
 		},
 		{
-			icon: 'instagram',
-			name: 'Instagram',
-			url: site.socials.instagram,
-			domain: 'instagram.com',
-			text: c.instagram,
-			action: c.follow,
-			btn: 'btn-instagram'
-		},
-		{
 			icon: 'email',
 			name: 'Email',
 			url: `mailto:${site.contactEmail}`,

@@ -36,3 +36,4 @@ export type Post = {
 };
 export type Faq = { question: string; answer: string };
 export type Lang = 'en' | 'bn';
+export type YoutubeVideo = { id: string; title: string; published: string; views: number };

@@ -12,7 +12,7 @@
 
 {#snippet who()}
 	<img
-		src="/instructor.jpg"
+		src="/showcase/instructor-towers.jpg"
 		alt={instructor.photoAlt}
 		width="800"
 		height="1000"
