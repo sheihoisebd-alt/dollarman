@@ -3,7 +3,7 @@
  *
  * Pages are prerendered, so the query string is only read in the browser. The values are kept in
  * sessionStorage so they survive navigation inside the site (the Facebook in-app browser keeps one
- * tab per ad click) and the fbclid is still there when the visitor consents to the Meta Pixel.
+ * tab per ad click) and the fbclid is still there for the Meta Pixel on later pages.
  */
 import { PUBLIC_TELEGRAM_CHANNEL } from '$app/env/public';
 

@@ -83,14 +83,7 @@ const en = {
 		privacy: 'Privacy policy',
 		terms: 'Terms',
 		disclaimerLink: 'Disclaimer',
-		downloads: 'Downloads',
-		cookieSettings: 'Cookie settings'
-	},
-	consent: {
-		text: 'We use the Meta Pixel to measure our ads, only if you allow it. Your course progress stays on your device.',
-		accept: 'Allow',
-		decline: 'No thanks',
-		more: 'Privacy policy'
+		downloads: 'Downloads'
 	},
 	home: {
 		offerBadge: 'Limited-time offer',
@@ -285,14 +278,7 @@ const bn: Dictionary = {
 		privacy: 'প্রাইভেসি পলিসি',
 		terms: 'ব্যবহারের শর্ত',
 		disclaimerLink: 'দায়মুক্তি',
-		downloads: 'ডাউনলোড',
-		cookieSettings: 'কুকি সেটিংস'
-	},
-	consent: {
-		text: 'আপনি অনুমতি দিলে তবেই আমাদের বিজ্ঞাপন কেমন কাজ করছে তা মাপতে Meta Pixel চালু হবে। আপনার কোর্সের অগ্রগতি শুধু আপনার ফোন বা কম্পিউটারেই থাকে।',
-		accept: 'অনুমতি দিন',
-		decline: 'না, থাক',
-		more: 'প্রাইভেসি পলিসি'
+		downloads: 'ডাউনলোড'
 	},
 	home: {
 		offerBadge: 'সীমিত সময়ের অফার',

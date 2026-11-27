@@ -26,7 +26,6 @@ export const POST: RequestHandler = async (event) => {
 	const eventId = str(body.event_id);
 	const sourceUrl = str(body.event_source_url, 2000);
 
-	if (body.consent !== true) return new Response('Consent required', { status: 400 });
 	if (!eventName || !EVENTS.has(eventName)) return new Response('Unknown event', { status: 400 });
 	if (!eventId || !ID.test(eventId)) return new Response('Invalid event_id', { status: 400 });
 

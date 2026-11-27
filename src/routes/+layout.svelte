@@ -3,12 +3,10 @@
 	import { onMount } from 'svelte';
 	import { afterNavigate, onNavigate } from '$app/navigation';
 	import { captureAttribution } from '#lib/attribution.svelte.js';
-	import { loadConsent } from '#lib/consent.svelte.js';
 	import { t } from '#lib/i18n.js';
 	import { markNavigated } from '#lib/motion.js';
 	import { progress } from '#lib/progress.svelte.js';
 	import { trackPageView } from '#lib/tracking.js';
-	import ConsentBanner from '#lib/components/ConsentBanner.svelte';
 	import SiteFooter from '#lib/components/SiteFooter.svelte';
 	import SiteHeader from '#lib/components/SiteHeader.svelte';
 	import type { LayoutProps } from './$types';
@@ -20,7 +18,6 @@
 
 	onMount(() => {
 		captureAttribution(new URL(location.href));
-		loadConsent();
 		progress.load();
 	});
 
@@ -65,5 +62,3 @@
 	</main>
 	<SiteFooter {lang} {dict} />
 </div>
-
-<ConsentBanner {lang} {dict} />

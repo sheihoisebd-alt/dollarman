@@ -40,7 +40,7 @@ src/content/{faq,tools}.json  FAQ (en + bn), tool/download listings
 src/lib/server/db.ts          The ONLY module that touches SQLite (read/write split)
 src/lib/server/meta.ts        Meta Conversions API client
 src/lib/attribution.svelte.ts UTM/fbclid capture + Telegram channel link
-src/lib/tracking.ts           Meta Pixel (after consent) + server event relay
+src/lib/tracking.ts           Meta Pixel + server event relay
 src/lib/progress.svelte.ts    Course progress in localStorage
 src/lib/i18n.ts               English + Bangla UI and home-page copy
 src/routes/api/meta-event     POST endpoint → Conversions API (not prerendered)
@@ -103,7 +103,7 @@ Still to verify on a real deployment: `/api/health` on Vercel's `nodejs24.x` run
 - **Telegram link:** every CTA links to the channel where the live classes are held, `https://t.me/<PUBLIC_TELEGRAM_CHANNEL>`. Channels ignore `?start=` payloads, so the link carries no campaign code; ad attribution comes from the Meta `Lead` event (with `placement`) fired on tap.
 
 - **Attribution:** UTMs and `fbclid` are captured in the browser and kept in `sessionStorage`, so they survive navigation (the `fbclid` feeds the `_fbc` cookie). Pages are prerendered, so this cannot happen on the server.
-- **Consent:** nothing is sent to Meta until the visitor taps "Allow" on the non-blocking banner. That applies to everyone. "Cookie settings" in the footer reopens it.
+- **No consent banner:** the audience is mainly in Bangladesh, which has no opt-in rule for ad cookies, so tracking runs for every visitor and no `Lead` is lost to an unanswered banner. Add a consent step back before targeting the EU/UK or other opt-in regions.
 - **Pixel + CAPI:** `PageView` (every navigation) and `Lead` (Telegram tap) fire in the browser with an `eventID`. The same `event_id` goes to `/api/meta-event`, which forwards to the Conversions API with IP, user agent, `_fbp`/`_fbc` (unhashed, as Meta requires) and a SHA-256-hashed anonymous `external_id`. No email or phone is collected, so there is nothing else to hash. Events are never stored.
 - `META_API_VERSION` defaults to `v24.0`. **Check Meta's docs for the current Graph API version.**
 

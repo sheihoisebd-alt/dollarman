@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { Dictionary, Lang } from '#lib/i18n.js';
 	import { href } from '#lib/paths.svelte.js';
-	import { consent } from '#lib/consent.svelte.js';
 	import { TELEGRAM_URL } from '#lib/attribution.svelte.js';
 	import { site } from '#lib/site.js';
 	import Icon from './Icon.svelte';
@@ -99,15 +98,8 @@
 			>
 		</p>
 
-		<div class="mt-6 flex flex-wrap items-center justify-between gap-3 text-sm text-muted">
+		<div class="mt-6 text-sm text-muted">
 			<p>© {new Date().getFullYear()} {site.name}</p>
-			<button
-				type="button"
-				class="min-h-10 underline hover:text-ink"
-				onclick={() => (consent.value = null)}
-			>
-				{dict.footer.cookieSettings}
-			</button>
 		</div>
 	</div>
 </footer>

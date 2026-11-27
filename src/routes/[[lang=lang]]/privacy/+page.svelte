@@ -10,7 +10,7 @@
 {#if data.lang === 'bn'}
 	<TextPage
 		title="প্রাইভেসি পলিসি"
-		description="Dollar Man Learning আপনার তথ্য কীভাবে সামলায়: কোনো অ্যাকাউন্ট নেই, অগ্রগতি থাকে আপনার ডিভাইসে, আর Meta Pixel চলে শুধু আপনার অনুমতি পেলে।"
+		description="Dollar Man Learning আপনার তথ্য কীভাবে সামলায়: কোনো অ্যাকাউন্ট নেই, অগ্রগতি থাকে আপনার ডিভাইসে, আর বিজ্ঞাপন মাপতে Meta Pixel ব্যবহার হয়।"
 		path="/privacy"
 		updated="১১ নভেম্বর ২০২৬"
 	>
@@ -30,29 +30,25 @@
 				থাকে। এটা কখনো আপনার ডিভাইস থেকে বাইরে যায় না। ব্রাউজারের সাইট ডেটা মুছে দিলে এটাও মুছে যাবে।
 			</li>
 			<li>
-				<strong>কুকি নিয়ে আপনার সিদ্ধান্ত</strong> লোকাল স্টোরেজে রাখা হয়, যাতে বারবার জিজ্ঞেস করতে
-				না হয়।
-			</li>
-			<li>
 				<strong>বিজ্ঞাপন ক্যাম্পেইনের তথ্য</strong> (UTM প্যারামিটার আর Facebook ক্লিক আইডি, যদি আপনার
-				ব্যবহার করা লিঙ্কে থাকে) আপনি সাইট ঘোরার সময় সেশন স্টোরেজে থাকে। আপনি অনুমতি দিলে এর মাধ্যমে
-				Meta বুঝতে পারে আপনি কোন বিজ্ঞাপন থেকে এসেছেন।
+				ব্যবহার করা লিঙ্কে থাকে) আপনি সাইট ঘোরার সময় সেশন স্টোরেজে থাকে। এর মাধ্যমে Meta বুঝতে পারে আপনি
+				কোন বিজ্ঞাপন থেকে এসেছেন।
 			</li>
 		</ul>
-		<h2>Meta Pixel আর Conversions API (শুধু আপনার অনুমতিতে)</h2>
+		<h2>Meta Pixel আর Conversions API</h2>
 		<p>
-			কুকি ব্যানারে "অনুমতি দিন" চাপলে, আমাদের Facebook আর Instagram বিজ্ঞাপন কেমন কাজ করছে তা মাপতে
-			আমরা Meta Pixel আর Meta-র Conversions API ব্যবহার করি। তখন Meta-কে "PageView" আর "Lead" (যখন
-			আপনি টেলিগ্রাম বাটনে চাপ দেন) জাতীয় ইভেন্ট পাঠাই, সাথে কিছু টেকনিক্যাল তথ্য: আপনার IP ঠিকানা,
-			ব্রাউজারের ইউজার এজেন্ট, Meta-র কুকি (_fbp, _fbc), পেজের URL, আর একটা র‍্যান্ডম ভিজিটর আইডি
-			যেটা পাঠানোর আগে আমরা হ্যাশ (SHA-256) করে নিই। Meta এই তথ্য নিজেদের <a
+			আমাদের Facebook আর Instagram বিজ্ঞাপন কেমন কাজ করছে তা মাপতে আমরা Meta Pixel আর Meta-র
+			Conversions API ব্যবহার করি। তখন Meta-কে "PageView" আর "Lead" (যখন আপনি টেলিগ্রাম বাটনে চাপ
+			দেন) জাতীয় ইভেন্ট পাঠাই, সাথে কিছু টেকনিক্যাল তথ্য: আপনার IP ঠিকানা, ব্রাউজারের ইউজার এজেন্ট,
+			Meta-র কুকি (_fbp, _fbc), পেজের URL, আর একটা র‍্যান্ডম ভিজিটর আইডি যেটা পাঠানোর আগে আমরা হ্যাশ
+			(SHA-256) করে নিই। Meta এই তথ্য নিজেদের <a
 				href="https://www.facebook.com/privacy/policy/"
 				rel="noopener">প্রাইভেসি পলিসি</a
 			> অনুযায়ী ব্যবহার করে। এই ইভেন্টগুলো আমরা নিজেরা জমিয়ে রাখি না।
 		</p>
 		<p>
-			"না, থাক" চাপলে এর কিছুই চালু হয় না, কিছু পাঠানোও হয় না। প্রতিটা পেজের নিচে "কুকি সেটিংস"
-			থেকে যেকোনো সময় সিদ্ধান্ত বদলাতে পারবেন।
+			এটা বন্ধ রাখতে চাইলে ব্রাউজারে থার্ড-পার্টি কুকি বা ট্র্যাকার ব্লক করতে পারেন, অথবা
+			Facebook-এর বিজ্ঞাপন সেটিংস থেকে বিজ্ঞাপনের ডেটা ব্যবহার সীমিত করতে পারেন।
 		</p>
 		<h2>টেলিগ্রাম</h2>
 		<p>
@@ -78,7 +74,7 @@
 {:else}
 	<TextPage
 		title="Privacy policy"
-		description="How Dollar Man Learning handles data: no accounts, progress stored on your device, and Meta Pixel only with your consent."
+		description="How Dollar Man Learning handles data: no accounts, progress stored on your device, and the Meta Pixel for ad measurement."
 		path="/privacy"
 		updated="11 November 2026"
 	>
@@ -97,27 +93,26 @@
 				<strong>Course progress</strong> (checklists and quiz scores) is saved in your browser's local
 				storage. It never leaves your device. You can clear it by clearing your browser's site data.
 			</li>
-			<li><strong>Your cookie choice</strong> is saved in local storage so we do not ask again.</li>
 			<li>
 				<strong>Ad campaign details</strong> (UTM parameters and the Facebook click ID, if present in
-				the link you used) are kept in session storage while you browse, so that, with your consent, Meta
-				can tell which ad you came from.
+				the link you used) are kept in session storage while you browse, so that Meta can tell which ad
+				you came from.
 			</li>
 		</ul>
-		<h2>Meta Pixel and Conversions API (only with your consent)</h2>
+		<h2>Meta Pixel and Conversions API</h2>
 		<p>
-			If you click "Allow" on the cookie banner, we use the Meta Pixel and Meta's Conversions API to
-			measure how our Facebook and Instagram ads perform. We then send Meta events such as
-			"PageView" and "Lead" (when you tap a Telegram button), along with technical data: your IP
-			address, browser user agent, Meta cookies (_fbp, _fbc), the page URL, and a random visitor ID
-			that we hash (SHA-256) before sending. Meta processes this data under its own <a
+			We use the Meta Pixel and Meta's Conversions API to measure how our Facebook and Instagram ads
+			perform. We then send Meta events such as "PageView" and "Lead" (when you tap a Telegram
+			button), along with technical data: your IP address, browser user agent, Meta cookies (_fbp,
+			_fbc), the page URL, and a random visitor ID that we hash (SHA-256) before sending. Meta
+			processes this data under its own <a
 				href="https://www.facebook.com/privacy/policy/"
 				rel="noopener">privacy policy</a
 			>. We do not store these events ourselves.
 		</p>
 		<p>
-			If you click "No thanks", none of this is loaded or sent. You can change your choice at any
-			time with "Cookie settings" at the bottom of every page.
+			To opt out, block third-party cookies or trackers in your browser, or limit how your data is
+			used for ads in your Facebook ad settings.
 		</p>
 		<h2>Telegram</h2>
 		<p>
